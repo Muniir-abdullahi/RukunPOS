@@ -8,9 +8,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', fn () => Inertia::render('Landing/Index'))->name('home');
-Route::get('/login', fn () => Inertia::render('Auth/Login'))->name('login');
 
-Route::middleware(['web'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/system-design', fn () => Inertia::render('SystemDesign/Index'))->name('system-design');
     Route::get('/pos', [SalesController::class, 'pos'])->name('pos');
@@ -49,3 +48,5 @@ Route::middleware(['web'])->group(function () {
     Route::get('/settings/notifications', fn () => Inertia::render('Modules/Placeholder', ['title' => 'Notifications (Placeholder)']))->name('settings.notifications');
     Route::get('/settings', fn () => Inertia::render('Modules/SettingsPage'))->name('settings');
 });
+
+require __DIR__.'/auth.php';

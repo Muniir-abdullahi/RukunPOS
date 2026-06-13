@@ -1,8 +1,14 @@
 import React from 'react';
+import { useForm, usePage } from '@inertiajs/react';
 import { Search, Bell, Menu, User } from 'lucide-react';
 import { Button } from '@/Components/ui/Button';
 
 export function Topbar({ onMenuClick }: { onMenuClick?: () => void }) {
+  const { post } = useForm({});
+  const { props } = usePage<{ auth?: { user?: { name?: string } | null } }>();
+  const userName = props.auth?.user?.name || 'Admin User';
+  const handleLogout = () => post('/logout');
+
   return (
     <header className="bg-white border-b border-gray-200 h-16 flex items-center justify-between px-4 sm:px-6 shrink-0">
       <div className="flex items-center flex-1">
@@ -42,9 +48,12 @@ export function Topbar({ onMenuClick }: { onMenuClick?: () => void }) {
             <User className="w-5 h-5 text-gray-500" />
           </div>
           <div className="hidden sm:block text-sm">
-            <p className="font-medium text-gray-700 leading-none">Admin User</p>
+            <p className="font-medium text-gray-700 leading-none">{userName}</p>
             <p className="text-gray-500 text-xs mt-1">Owner</p>
           </div>
+          <button onClick={handleLogout} className="hidden sm:block text-sm text-gray-500 hover:text-gray-900">
+            Logout
+          </button>
         </div>
       </div>
     </header>
