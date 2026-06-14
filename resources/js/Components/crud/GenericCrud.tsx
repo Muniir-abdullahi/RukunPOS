@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Link, router } from '@inertiajs/react';
-import { Plus, Search, Filter, MoreVertical, Eye, Edit, Trash2, ArrowLeft, Save, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Plus, MoreVertical, Eye, Edit, Trash2, ArrowLeft, Save } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { DataTable, type Column } from '../ui/DataTable';
+import { useTableFilter } from '@/hooks/useTableFilter';
 import { cn } from '@/lib/utils';
 
 export interface CrudColumn {
@@ -64,15 +66,24 @@ export function StatusBadge({ status, colorMap }: { status: string, colorMap?: R
 // LIST PAGE
 // ----------------------------------------------------
 
-function ListPage({ config }: { config: CrudConfig }) {
-  const [search, setSearch] = useState('');
-  
-  const filteredData = config.mockData.filter(item => {
-    if (!search) return true;
-    return Object.values(item).some(val => 
-      String(val).toLowerCase().includes(search.toLowerCase())
-    );
-  });
+function ListPage({ config, tableData, filterDefaults = {} }: { config: CrudConfig; tableData?: any; filterDefaults?: Record<string, any> }) {
+  const serverMode = Object.keys(filterDefaults).length > 0 || tableData !== undefined;
+  const table = useTableFilter({ only: ['records'], defaultFilters: filterDefaults });
+  const formatValue = (row: any, column: CrudColumn) => {
+    const value = row[column.key];
+
+    if (column.type === 'badge') return <StatusBadge status={String(value ?? '')} colorMap={column.badgeColors} />;
+    if (column.type === 'currency') return `$${Number(value ?? 0).toFixed(2)}`;
+    if (column.type === 'date' && value) return new Date(value).toLocaleDateString();
+
+    return <span className="font-medium">{String(value ?? '')}</span>;
+  };
+  const columns: Column<any>[] = config.columns.map(column => ({
+    key: column.key,
+    label: column.label,
+    render: row => formatValue(row, column),
+  }));
+  const hasActions = !config.disableAdd || !config.disableEdit || !config.disableDelete;
 
   return (
     <div className="flex flex-col h-full bg-gray-50/50 p-4 sm:p-6 lg:p-8 overflow-y-auto">
@@ -90,111 +101,32 @@ function ListPage({ config }: { config: CrudConfig }) {
         )}
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
-        {/* Toolbar */}
-        <div className="p-4 border-b border-gray-100 flex flex-col sm:flex-row gap-3 justify-between items-center bg-gray-50/30">
-          <div className="relative w-full sm:w-72">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <input 
-              type="text" 
-              placeholder={`Search ${config.moduleName.toLowerCase()}...`}
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-xl text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium"
-            />
+      <DataTable
+        data={serverMode ? (tableData ?? null) : config.mockData}
+        columns={columns}
+        rowKey="id"
+        selectable
+        loading={serverMode && (table.loading || tableData === undefined || tableData === null)}
+        initialFilters={table.filters}
+        filters={[{ key: 'search', label: 'Search', type: 'text', placeholder: `Search ${config.moduleName.toLowerCase()}...` }]}
+        onFilter={filters => serverMode && table.reload(filters)}
+        emptyMessage="No records found."
+        actions={hasActions ? row => (
+          <div className="flex items-center justify-end gap-1 opacity-60 group-hover:opacity-100 transition-opacity">
+            <Link href={`${config.basePath}/${row.id}`}>
+              <button className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"><Eye className="w-4 h-4" /></button>
+            </Link>
+            {!config.disableEdit && (
+              <Link href={`${config.basePath}/${row.id}/edit`}>
+                <button className="p-1.5 text-gray-500 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"><Edit className="w-4 h-4" /></button>
+              </Link>
+            )}
+            {!config.disableDelete && (
+              <button onClick={() => window.confirm(`Delete this ${config.entityName.toLowerCase()}?`) && router.delete(`${config.basePath}/${row.id}`)} className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"><Trash2 className="w-4 h-4" /></button>
+            )}
           </div>
-          <div className="flex gap-2 w-full sm:w-auto">
-            <Button variant="outline" className="flex items-center gap-2 rounded-xl border-gray-200 text-gray-600 hover:bg-gray-50 w-full sm:w-auto">
-              <Filter className="w-4 h-4" /> Filters
-            </Button>
-          </div>
-        </div>
-
-        {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-gray-50/80 border-b border-gray-100 uppercase">
-                <th className="px-4 py-3 text-[11px] font-bold text-gray-500 tracking-wider w-10">
-                  <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-                </th>
-                {config.columns.map(col => (
-                  <th key={col.key} className="px-4 py-3 text-[11px] font-bold text-gray-500 tracking-wider whitespace-nowrap">
-                    {col.label}
-                  </th>
-                ))}
-                {!config.disableAdd && !config.disableEdit && !config.disableDelete && (
-                  <th className="px-4 py-3 text-[11px] font-bold text-gray-500 tracking-wider text-right">Actions</th>
-                )}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {filteredData.length > 0 ? (
-                filteredData.map((row, i) => (
-                  <tr key={row.id || i} className="hover:bg-gray-50/50 transition-colors group">
-                    <td className="px-4 py-3.5">
-                      <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-                    </td>
-                    {config.columns.map(col => {
-                      const val = row[col.key];
-                      return (
-                        <td key={col.key} className="px-4 py-3.5 text-sm text-gray-700 whitespace-nowrap">
-                          {col.type === 'badge' ? (
-                            <StatusBadge status={String(val)} colorMap={col.badgeColors} />
-                          ) : col.type === 'currency' ? (
-                            `$${Number(val).toFixed(2)}`
-                          ) : col.type === 'date' ? (
-                            new Date(val).toLocaleDateString()
-                          ) : (
-                            <span className="font-medium">{val}</span>
-                          )}
-                        </td>
-                      );
-                    })}
-                    {(!config.disableAdd || !config.disableEdit || !config.disableDelete) && (
-                      <td className="px-4 py-3.5 text-right">
-                        <div className="flex items-center justify-end gap-1 opacity-60 group-hover:opacity-100 transition-opacity">
-                          <Link href={`${config.basePath}/${row.id}`}>
-                            <button className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"><Eye className="w-4 h-4" /></button>
-                          </Link>
-                          {!config.disableEdit && (
-                            <Link href={`${config.basePath}/${row.id}/edit`}>
-                              <button className="p-1.5 text-gray-500 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"><Edit className="w-4 h-4" /></button>
-                            </Link>
-                          )}
-                          {!config.disableDelete && (
-                            <button className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"><Trash2 className="w-4 h-4" /></button>
-                          )}
-                        </div>
-                      </td>
-                    )}
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={config.columns.length + 2} className="px-4 py-12 text-center text-gray-500">
-                    <div className="flex flex-col items-center">
-                      <Search className="w-8 h-8 text-gray-300 mb-3" />
-                      <p className="text-sm font-medium text-gray-900">No records found</p>
-                      <p className="text-xs mt-1">Try adjusting your filters or search query.</p>
-                    </div>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-        
-        {/* Pagination placeholder */}
-        <div className="p-4 border-t border-gray-100 flex items-center justify-between bg-gray-50/30 text-sm">
-          <span className="text-gray-500">Showing {filteredData.length > 0 ? 1 : 0} to {filteredData.length} of {config.mockData.length} entries</span>
-          <div className="flex items-center gap-1">
-            <Button variant="ghost" size="sm" className="px-2 h-8 rounded-lg text-gray-500 hover:text-gray-900"><ChevronLeft className="w-4 h-4" /></Button>
-            <Button variant="outline" size="sm" className="px-3 h-8 rounded-lg border-gray-200">1</Button>
-            <Button variant="ghost" size="sm" className="px-2 h-8 rounded-lg text-gray-500 hover:text-gray-900"><ChevronRight className="w-4 h-4" /></Button>
-          </div>
-        </div>
-      </div>
+        ) : undefined}
+      />
     </div>
   );
 }
@@ -206,6 +138,21 @@ function ListPage({ config }: { config: CrudConfig }) {
 function FormPage({ config, isEdit = false, id }: { config: CrudConfig, isEdit?: boolean, id?: string | number }) {
   
   const initialData = isEdit ? config.mockData.find(item => String(item.id) === String(id)) : {};
+  const [formData, setFormData] = useState<Record<string, any>>(() => {
+    return config.formFields.reduce((values, field) => {
+      if (field.type !== 'section' && field.type !== 'file' && field.type !== 'wysiwyg') {
+        values[field.key] = initialData?.[field.key] ?? (field.type === 'checkbox' ? false : '');
+      }
+
+      return values;
+    }, {} as Record<string, any>);
+  });
+
+  const setField = (key: string, value: any) => setFormData(prev => ({ ...prev, [key]: value }));
+  const submit = () => {
+    const options = { preserveScroll: true };
+    isEdit ? router.patch(`${config.basePath}/${id}`, formData, options) : router.post(config.basePath, formData, options);
+  };
 
   return (
     <div className="flex flex-col h-full bg-gray-50 p-4 sm:p-6 lg:p-8 overflow-y-auto">
@@ -248,7 +195,8 @@ function FormPage({ config, isEdit = false, id }: { config: CrudConfig, isEdit?:
                       <div className="flex h-6 items-center">
                         <input 
                           type="checkbox" 
-                          defaultChecked={initialData?.[field.key] ? true : false}
+                          checked={Boolean(formData[field.key])}
+                          onChange={event => setField(field.key, event.target.checked)}
                           className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                         />
                       </div>
@@ -282,7 +230,8 @@ function FormPage({ config, isEdit = false, id }: { config: CrudConfig, isEdit?:
 
                   {field.type === 'textarea' ? (
                     <textarea 
-                      defaultValue={initialData?.[field.key] || ''}
+                      value={formData[field.key] || ''}
+                      onChange={event => setField(field.key, event.target.value)}
                       className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all min-h-[100px]"
                       placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}...`}
                     />
@@ -294,7 +243,8 @@ function FormPage({ config, isEdit = false, id }: { config: CrudConfig, isEdit?:
                         <div className="w-8 h-8 rounded bg-white border border-gray-200 flex items-center justify-center text-gray-600 font-serif underline cursor-not-allowed">U</div>
                       </div>
                       <textarea 
-                        defaultValue={initialData?.[field.key] || ''}
+                        value={formData[field.key] || ''}
+                        onChange={event => setField(field.key, event.target.value)}
                         className="w-full px-4 py-3 text-sm min-h-[150px] outline-none resize-y"
                         placeholder={field.placeholder || "Start typing..."}
                       />
@@ -309,7 +259,8 @@ function FormPage({ config, isEdit = false, id }: { config: CrudConfig, isEdit?:
                     </div>
                   ) : field.type === 'select' ? (
                     <select 
-                      defaultValue={initialData?.[field.key] || ''}
+                      value={formData[field.key] || ''}
+                      onChange={event => setField(field.key, event.target.value)}
                       className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium appearance-none"
                     >
                       <option value="">{field.placeholder || `Select ${field.label}...`}</option>
@@ -320,7 +271,8 @@ function FormPage({ config, isEdit = false, id }: { config: CrudConfig, isEdit?:
                   ) : (
                     <input 
                       type={field.type}
-                      defaultValue={initialData?.[field.key] || ''}
+                      value={formData[field.key] || ''}
+                      onChange={event => setField(field.key, field.type === 'number' ? Number(event.target.value) : event.target.value)}
                       className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
                       placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}...`}
                     />
@@ -335,10 +287,7 @@ function FormPage({ config, isEdit = false, id }: { config: CrudConfig, isEdit?:
           <Button variant="outline" className="rounded-xl border-gray-200 text-gray-600 bg-white hover:bg-gray-50 h-11 px-6 font-semibold" onClick={() => router.visit(config.basePath)}>
             Cancel
           </Button>
-          <Button className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white h-11 px-6 font-semibold flex items-center gap-2 shadow-sm" onClick={() => {
-            alert("Mock save successful!");
-            router.visit(config.basePath);
-          }}>
+          <Button className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white h-11 px-6 font-semibold flex items-center gap-2 shadow-sm" onClick={submit}>
             <Save className="w-4 h-4" /> {isEdit ? 'Update' : 'Save'} {config.entityName}
           </Button>
         </div>
@@ -375,7 +324,7 @@ function ViewPage({ config, id }: { config: CrudConfig, id?: string | number }) 
                <Edit className="w-4 h-4" /> Edit
              </Button>
            </Link>
-           <Button variant="outline" className="rounded-xl bg-white border-gray-200 text-red-600 hover:bg-red-50 flex items-center gap-2">
+           <Button onClick={() => window.confirm(`Delete this ${config.entityName.toLowerCase()}?`) && router.delete(`${config.basePath}/${id}`)} variant="outline" className="rounded-xl bg-white border-gray-200 text-red-600 hover:bg-red-50 flex items-center gap-2">
              <Trash2 className="w-4 h-4" /> Delete
            </Button>
         </div>
@@ -456,9 +405,9 @@ function ViewPage({ config, id }: { config: CrudConfig, id?: string | number }) 
 // WRAPPER MODULE
 // ----------------------------------------------------
 
-export function GenericCrudModule({ config, action = 'list', id }: { config: CrudConfig, action?: 'list' | 'add' | 'view' | 'edit', id?: string | number }) {
+export function GenericCrudModule({ config, action = 'list', id, tableData, filterDefaults }: { config: CrudConfig, action?: 'list' | 'add' | 'view' | 'edit', id?: string | number, tableData?: any, filterDefaults?: Record<string, any> }) {
   if (action === 'add') return <FormPage config={config} />;
   if (action === 'edit') return <FormPage config={config} isEdit id={id} />;
   if (action === 'view') return <ViewPage config={config} id={id} />;
-  return <ListPage config={config} />;
+  return <ListPage config={config} tableData={tableData} filterDefaults={filterDefaults} />;
 }

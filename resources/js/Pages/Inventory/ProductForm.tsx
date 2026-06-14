@@ -6,18 +6,21 @@ import { ArrowLeft, Save, UploadCloud, Link as LinkIcon, AlertCircle } from 'luc
 import { cn } from '@/lib/utils';
 
 export function ProductForm() {
-  const { props } = usePage<{ id?: string }>();
-  const id = props.id;
+  const { props } = usePage<{ id?: string; product?: Product; categories?: any[]; brands?: any[]; units?: any[] }>();
+  const id = props.id ?? props.product?.id;
   const isEditing = Boolean(id);
   
   const { products, categories, brands, units, addProduct, updateProduct } = useInventoryStore();
+  const categoryRows = props.categories ?? categories;
+  const brandRows = props.brands ?? brands;
+  const unitRows = props.units ?? units;
   const [formData, setFormData] = useState<Partial<Product>>({
     name: '',
     sku: '',
     barcode: '',
-    categoryId: categories[0]?.id || '',
-    brandId: brands[0]?.id || '',
-    unitId: units[0]?.id || '',
+    categoryId: categoryRows[0]?.id || '',
+    brandId: brandRows[0]?.id || '',
+    unitId: unitRows[0]?.id || '',
     costPrice: 0,
     sellingPrice: 0,
     stock: 0,
@@ -28,6 +31,11 @@ export function ProductForm() {
   });
 
   useEffect(() => {
+    if (props.product) {
+      setFormData(props.product);
+      return;
+    }
+
     if (isEditing && id) {
       const p = products.find(prod => prod.id === id);
       if (p) setFormData(p);
@@ -48,15 +56,15 @@ export function ProductForm() {
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     if (isEditing && id) {
-      updateProduct(id, formData as Product);
+      props.product ? router.patch(`/products/${id}`, formData) : updateProduct(id, formData as Product);
     } else {
       const newProduct: Product = {
         ...(formData as Product),
         id: `p${Date.now()}`
       };
-      addProduct(newProduct);
+      props.categories ? router.post('/products', formData) : addProduct(newProduct);
     }
-    router.visit('/products');
+    if (!props.categories && !props.product) router.visit('/products');
   };
 
   return (
@@ -207,7 +215,7 @@ export function ProductForm() {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white"
                 >
                   <option value="" disabled>Select category</option>
-                  {categories.map(c => (
+                  {categoryRows.map(c => (
                     <option key={c.id} value={c.id}>{c.name}</option>
                   ))}
                 </select>
@@ -219,7 +227,7 @@ export function ProductForm() {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white"
                 >
                   <option value="" disabled>Select brand</option>
-                  {brands.map(b => (
+                  {brandRows.map(b => (
                     <option key={b.id} value={b.id}>{b.name}</option>
                   ))}
                 </select>
@@ -230,8 +238,8 @@ export function ProductForm() {
                   name="unitId" value={formData.unitId} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white"
                 >
-                  {units.map(u => (
-                    <option key={u.id} value={u.id}>{u.name} ({u.shortName})</option>
+                  {unitRows.map(u => (
+                    <option key={u.id} value={u.id}>{u.name} ({u.shortName || u.short_name})</option>
                   ))}
                 </select>
               </div>

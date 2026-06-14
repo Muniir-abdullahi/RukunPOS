@@ -2,21 +2,22 @@ import React from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { useInventoryStore } from '@/store/inventoryStore';
 import { Button } from '@/Components/ui/Button';
+import { DataTable } from '@/Components/ui/DataTable';
 import { 
-  ArrowLeft, Edit2, Package, History, TrendingUp, AlertCircle, ShoppingCart 
+  ArrowLeft, Edit2, Package, History, TrendingUp, ShoppingCart 
 } from 'lucide-react';
 
 export function ProductDetail() {
-  const { props } = usePage<{ id?: string }>();
-  const id = props.id;
+  const { props } = usePage<{ id?: string; product?: any }>();
   const { products, categories, brands, units, adjustments } = useInventoryStore();
   
-  const product = products.find(p => p.id === id);
+  const product = props.product ?? products.find(p => p.id === props.id);
+  const id = props.id ?? product?.id;
   if (!product) return <div className="p-8 text-center text-gray-500">Product not found.</div>;
 
-  const categoryPath = categories.find(c => c.id === product.categoryId)?.name || 'Unknown';
-  const brandName = brands.find(b => b.id === product.brandId)?.name || 'Unknown';
-  const unitName = units.find(u => u.id === product.unitId)?.shortName || '';
+  const categoryPath = product.category || categories.find(c => String(c.id) === String(product.categoryId))?.name || 'Unknown';
+  const brandName = product.brand || brands.find(b => String(b.id) === String(product.brandId))?.name || 'Unknown';
+  const unitName = product.unit || units.find(u => String(u.id) === String(product.unitId))?.shortName || '';
 
   const productAdjustments = adjustments.filter(a => a.productId === product.id);
 
@@ -85,40 +86,27 @@ export function ProductDetail() {
                  <History className="w-4 h-4 text-gray-500" /> Recent Stock Movements
                </h3>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm whitespace-nowrap">
-                <thead className="bg-white">
-                  <tr className="text-gray-500 border-b border-gray-100">
-                    <th className="font-semibold p-4">Date</th>
-                    <th className="font-semibold p-4">Type</th>
-                    <th className="font-semibold p-4 text-right">Quantity</th>
-                    <th className="font-semibold p-4">Reason</th>
-                    <th className="font-semibold p-4">Notes</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-50">
-                  {productAdjustments.length === 0 ? (
-                    <tr><td colSpan={5} className="p-6 text-center text-gray-400 text-sm">No adjustments found.</td></tr>
-                  ) : (
-                    productAdjustments.map(adj => (
-                      <tr key={adj.id}>
-                        <td className="p-4 text-gray-600">{new Date(adj.date).toLocaleDateString()}</td>
-                        <td className="p-4">
-                          <span className={`px-2 py-0.5 rounded text-xs font-semibold ${adj.type === 'Increase' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
-                            {adj.type}
-                          </span>
-                        </td>
-                        <td className="p-4 text-right font-medium text-gray-900 tabular-nums">
-                          {adj.type === 'Increase' ? '+' : '-'}{adj.quantity}
-                        </td>
-                        <td className="p-4 text-gray-700">{adj.reason}</td>
-                        <td className="p-4 text-gray-500 text-xs truncate max-w-[200px]">{adj.notes}</td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
+            <DataTable
+              data={productAdjustments}
+              rowKey="id"
+              emptyMessage="No adjustments found."
+              className="rounded-none border-0 shadow-none"
+              columns={[
+                { key: 'date', label: 'Date', render: adj => new Date(adj.date).toLocaleDateString() },
+                {
+                  key: 'type',
+                  label: 'Type',
+                  render: adj => (
+                    <span className={`px-2 py-0.5 rounded text-xs font-semibold ${adj.type === 'Increase' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+                      {adj.type}
+                    </span>
+                  ),
+                },
+                { key: 'quantity', label: 'Quantity', className: 'text-right', render: adj => `${adj.type === 'Increase' ? '+' : '-'}${adj.quantity}` },
+                { key: 'reason', label: 'Reason' },
+                { key: 'notes', label: 'Notes', render: adj => <span className="block text-xs truncate max-w-[200px]">{adj.notes}</span> },
+              ]}
+            />
           </div>
         </div>
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Calendar, Filter, FileText, Download } from 'lucide-react';
 import { Button } from '@/Components/ui/Button';
+import { DataTable } from '@/Components/ui/DataTable';
 
 const mockData = [
   { name: 'Jan', value: 4000 },
@@ -14,6 +15,14 @@ const mockData = [
 ];
 
 function GenericReport({ title, description, hideChart }: { title: string, description: string, hideChart?: boolean }) {
+  const rows = [1, 2, 3, 4, 5].map(row => ({
+    id: row,
+    code: `#${row}042`,
+    date: `2026-05-${row + 10}`,
+    description: `${title} Record ${row}`,
+    amount: `$${(row * 142.50).toFixed(2)}`,
+  }));
+
   return (
     <div className="flex flex-col h-full bg-gray-50/50 p-4 sm:p-6 lg:p-8 overflow-y-auto">
       <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -76,27 +85,17 @@ function GenericReport({ title, description, hideChart }: { title: string, descr
         <div className="p-5 border-b border-gray-100 bg-gray-50/50">
           <h3 className="text-sm font-bold text-gray-900">Detailed Data Table</h3>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-gray-50/30 border-b border-gray-100">
-                {['ID', 'Date', 'Description', 'Amount'].map((h) => (
-                  <th key={h} className="px-5 py-3 text-[11px] font-bold text-gray-500 uppercase tracking-wider">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {[1,2,3,4,5].map((row) => (
-                <tr key={row} className="hover:bg-gray-50">
-                  <td className="px-5 py-3 text-sm text-gray-900">#{row}042</td>
-                  <td className="px-5 py-3 text-sm text-gray-600">2026-05-{row+10}</td>
-                  <td className="px-5 py-3 text-sm text-gray-900 font-medium">{title} Record {row}</td>
-                  <td className="px-5 py-3 text-sm text-gray-900 font-bold tabular-nums">${(row * 142.50).toFixed(2)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <DataTable
+          data={rows}
+          rowKey="id"
+          columns={[
+            { key: 'code', label: 'ID' },
+            { key: 'date', label: 'Date' },
+            { key: 'description', label: 'Description', render: row => <span className="font-medium text-gray-900">{row.description}</span> },
+            { key: 'amount', label: 'Amount', render: row => <span className="font-bold tabular-nums">{row.amount}</span> },
+          ]}
+          className="rounded-none border-0 shadow-none"
+        />
       </div>
     </div>
   );

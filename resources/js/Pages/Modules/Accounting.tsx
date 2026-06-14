@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@/Components/ui/Button';
 import { ArrowRightIcon, RefreshCcw } from 'lucide-react';
+import { DataTable } from '@/Components/ui/DataTable';
 
 export function MoneyTransfer() {
   return (
@@ -62,6 +63,11 @@ export function MoneyTransfer() {
 }
 
 export function AccountStatement() {
+  const rows = [
+    { id: 1, date: '2026-05-10', reference: '-', description: 'Opening Balance', debit: '-', credit: '-', balance: '$12,000.00' },
+    { id: 2, date: '2026-05-12', reference: 'SL-002', description: 'Payment received for SL-002', debit: '-', credit: '$3,400.50', balance: '$15,400.50' },
+  ];
+
   return (
     <div className="p-4 sm:p-6 lg:p-8 h-full overflow-y-auto">
       <div className="mb-6">
@@ -90,38 +96,18 @@ export function AccountStatement() {
          </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-gray-50/80 border-b border-gray-100">
-              <th className="px-5 py-3 text-[11px] font-bold text-gray-500 uppercase tracking-wider">Date</th>
-              <th className="px-5 py-3 text-[11px] font-bold text-gray-500 uppercase tracking-wider">Reference</th>
-              <th className="px-5 py-3 text-[11px] font-bold text-gray-500 uppercase tracking-wider">Description</th>
-              <th className="px-5 py-3 text-[11px] font-bold text-gray-500 uppercase tracking-wider text-right">Debit</th>
-              <th className="px-5 py-3 text-[11px] font-bold text-gray-500 uppercase tracking-wider text-right">Credit</th>
-              <th className="px-5 py-3 text-[11px] font-bold text-gray-500 uppercase tracking-wider text-right">Balance</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100">
-             <tr className="hover:bg-gray-50">
-               <td className="px-5 py-3 text-sm text-gray-600">2026-05-10</td>
-               <td className="px-5 py-3 text-sm text-gray-900">-</td>
-               <td className="px-5 py-3 text-sm font-medium text-gray-900">Opening Balance</td>
-               <td className="px-5 py-3 text-sm text-gray-900 text-right">-</td>
-               <td className="px-5 py-3 text-sm text-gray-900 text-right">-</td>
-               <td className="px-5 py-3 text-sm font-bold text-blue-600 text-right">$12,000.00</td>
-             </tr>
-             <tr className="hover:bg-gray-50">
-               <td className="px-5 py-3 text-sm text-gray-600">2026-05-12</td>
-               <td className="px-5 py-3 text-sm text-gray-900">SL-002</td>
-               <td className="px-5 py-3 text-sm text-gray-900">Payment received for SL-002</td>
-               <td className="px-5 py-3 text-sm text-gray-900 text-right">-</td>
-               <td className="px-5 py-3 text-sm text-green-600 font-medium text-right">$3,400.50</td>
-               <td className="px-5 py-3 text-sm font-bold text-gray-900 text-right">$15,400.50</td>
-             </tr>
-          </tbody>
-        </table>
-      </div>
+      <DataTable
+        data={rows}
+        rowKey="id"
+        columns={[
+          { key: 'date', label: 'Date' },
+          { key: 'reference', label: 'Reference' },
+          { key: 'description', label: 'Description', render: row => <span className="font-medium text-gray-900">{row.description}</span> },
+          { key: 'debit', label: 'Debit', className: 'text-right' },
+          { key: 'credit', label: 'Credit', className: 'text-right', render: row => <span className="text-green-600 font-medium">{row.credit}</span> },
+          { key: 'balance', label: 'Balance', className: 'text-right', render: row => <span className="font-bold text-gray-900">{row.balance}</span> },
+        ]}
+      />
     </div>
   );
 }

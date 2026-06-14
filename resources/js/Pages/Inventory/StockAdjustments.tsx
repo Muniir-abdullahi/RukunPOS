@@ -1,51 +1,89 @@
 import React, { useState } from 'react';
 import { useInventoryStore, StockAdjustment } from '@/store/inventoryStore';
 import { Button } from '@/Components/ui/Button';
-import { Search, Plus, Filter } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { usePage } from '@inertiajs/react';
+import { Plus } from 'lucide-react';
+import { router, usePage } from '@inertiajs/react';
+import { DataTable, type Column } from '@/Components/ui/DataTable';
+import { useTableFilter } from '@/hooks/useTableFilter';
 
-export function StockAdjustments() {
+export function StockAdjustments({
+  adjustmentsProp,
+  filters = {},
+  productsProp,
+  warehousesProp = [],
+}: {
+  adjustmentsProp?: any;
+  filters?: Record<string, any>;
+  productsProp?: any[];
+  warehousesProp?: any[];
+}) {
   const { adjustments, products, addAdjustment } = useInventoryStore();
+  const table = useTableFilter({ only: ['adjustments'], defaultFilters: filters });
+  const serverMode = adjustmentsProp !== undefined || Object.keys(filters).length > 0;
   const { url } = usePage();
   const initialProductId = new URLSearchParams(url.split('?')[1] || '').get('productId') || '';
-  
+  const productRows = productsProp ?? products;
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState<Partial<StockAdjustment>>({
+  const [formData, setFormData] = useState<Partial<StockAdjustment> & { warehouseId?: string }>({
     productId: initialProductId,
+    warehouseId: warehousesProp[0]?.id ? String(warehousesProp[0].id) : '',
+    type: 'Increase',
+    quantity: 1,
+    reason: 'Restocking',
+    notes: '',
+  });
+  const columns: Column<any>[] = [
+    { key: 'date', label: 'Date', render: adjustment => adjustment.date ? new Date(adjustment.date).toLocaleString() : '-' },
+    { key: 'reference', label: 'Reference', render: adjustment => <span className="font-medium text-gray-900">{adjustment.reference}</span> },
+    { key: 'warehouse', label: 'Warehouse' },
+    { key: 'products', label: 'Products', render: adjustment => <span className="block max-w-[260px] truncate">{adjustment.products || 'Unknown'}</span> },
+    { key: 'items_count', label: 'Items', className: 'text-center' },
+    { key: 'quantity', label: 'Quantity', className: 'text-right font-bold tabular-nums' },
+    { key: 'note', label: 'Notes', render: adjustment => <span className="block max-w-[220px] truncate text-xs text-gray-500">{adjustment.note}</span> },
+  ];
+
+  const resetForm = () => setFormData({
+    productId: '',
+    warehouseId: warehousesProp[0]?.id ? String(warehousesProp[0].id) : '',
     type: 'Increase',
     quantity: 1,
     reason: 'Restocking',
     notes: '',
   });
 
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const filteredAdjustments = adjustments.filter(a => {
-    const p = products.find(prod => prod.id === a.productId);
-    if (!p) return false;
-    return p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-           a.reason.toLowerCase().includes(searchQuery.toLowerCase());
-  });
-
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.productId || formData.quantity! <= 0) return;
-    
+
+    if (serverMode) {
+      router.post('/inventory/adjustments', {
+        warehouse_id: formData.warehouseId,
+        date: new Date().toISOString().slice(0, 10),
+        note: formData.notes,
+        items: [{
+          product_id: formData.productId,
+          type: formData.type,
+          quantity: formData.quantity,
+          reason: formData.reason,
+          notes: formData.notes,
+        }],
+      }, {
+        preserveScroll: true,
+        onSuccess: () => {
+          setIsModalOpen(false);
+          resetForm();
+        },
+      });
+      return;
+    }
+
     addAdjustment({
       ...(formData as StockAdjustment),
       id: `adj${Date.now()}`,
       date: new Date().toISOString(),
     });
-    
     setIsModalOpen(false);
-    setFormData({
-      productId: '',
-      type: 'Increase',
-      quantity: 1,
-      reason: 'Restocking',
-      notes: '',
-    });
+    resetForm();
   };
 
   return (
@@ -60,70 +98,17 @@ export function StockAdjustments() {
         </Button>
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-xl shadow-sm flex flex-col flex-1 overflow-hidden">
-        <div className="p-4 border-b border-gray-200 flex flex-col sm:flex-row gap-4 shrink-0 bg-gray-50/50">
-          <div className="relative flex-1 max-w-md">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            <input 
-              type="text" 
-              placeholder="Search product or reason..." 
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-          <Button variant="outline" className="w-10 px-0 flex items-center justify-center shrink-0">
-            <Filter className="w-4 h-4 text-gray-500" />
-          </Button>
-        </div>
-
-        <div className="flex-1 overflow-auto custom-scrollbar">
-          <table className="w-full text-left text-sm whitespace-nowrap">
-            <thead className="bg-white sticky top-0 z-10 shadow-sm shadow-gray-100">
-              <tr className="text-gray-500">
-                <th className="font-semibold p-4">Date</th>
-                <th className="font-semibold p-4">Product</th>
-                <th className="font-semibold p-4 text-center">Type</th>
-                <th className="font-semibold p-4 text-right">Quantity</th>
-                <th className="font-semibold p-4">Reason</th>
-                <th className="font-semibold p-4">Notes</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {filteredAdjustments.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="p-12 text-center text-gray-400">
-                    <p className="font-medium text-gray-600">No adjustments found.</p>
-                  </td>
-                </tr>
-              ) : (
-                filteredAdjustments.map(adj => {
-                  const product = products.find(p => p.id === adj.productId);
-                  return (
-                    <tr key={adj.id} className="hover:bg-gray-50">
-                      <td className="p-4 text-gray-600">{new Date(adj.date).toLocaleString()}</td>
-                      <td className="p-4 font-medium text-gray-900">{product?.name || 'Unknown'}</td>
-                      <td className="p-4 text-center">
-                        <span className={cn(
-                          "px-2 py-0.5 rounded text-xs font-bold border",
-                          adj.type === 'Increase' ? "bg-green-50 text-green-700 border-green-200" : "bg-red-50 text-red-700 border-red-200"
-                        )}>
-                          {adj.type}
-                        </span>
-                      </td>
-                      <td className="p-4 text-right font-black tabular-nums text-gray-900">
-                        {adj.type === 'Increase' ? '+' : '-'}{adj.quantity}
-                      </td>
-                      <td className="p-4 text-gray-800">{adj.reason}</td>
-                      <td className="p-4 text-gray-500 text-xs truncate max-w-[200px]">{adj.notes}</td>
-                    </tr>
-                  );
-                })
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DataTable
+        data={serverMode ? (adjustmentsProp ?? null) : adjustments}
+        columns={columns}
+        rowKey="id"
+        loading={serverMode && (table.loading || adjustmentsProp === null || adjustmentsProp === undefined)}
+        initialFilters={table.filters}
+        filters={[{ key: 'search', label: 'Search', type: 'text', placeholder: 'Search reference, product, warehouse...' }]}
+        onFilter={nextFilters => serverMode && table.reload(nextFilters)}
+        emptyMessage="No adjustments found."
+        className="flex-1 min-h-0"
+      />
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm">
@@ -134,25 +119,40 @@ export function StockAdjustments() {
                 <p className="text-sm text-gray-500">Modify stock level manually</p>
               </div>
               <div className="p-6 space-y-4">
+                {serverMode && (
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">Warehouse</label>
+                    <select
+                      required
+                      value={formData.warehouseId}
+                      onChange={e => setFormData({ ...formData, warehouseId: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white"
+                    >
+                      <option value="" disabled>Select warehouse...</option>
+                      {warehousesProp.map(warehouse => <option key={warehouse.id} value={warehouse.id}>{warehouse.name}</option>)}
+                    </select>
+                  </div>
+                )}
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Product</label>
-                  <select 
-                    required autoFocus
-                    value={formData.productId} 
+                  <select
+                    required
+                    autoFocus
+                    value={formData.productId}
                     onChange={e => setFormData({ ...formData, productId: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white"
                   >
                     <option value="" disabled>Select product...</option>
-                    {products.map(p => (
-                      <option key={p.id} value={p.id}>{p.name} (Current: {p.stock})</option>
+                    {productRows.map(product => (
+                      <option key={product.id} value={product.id}>{product.name}{product.stock !== undefined ? ` (Current: ${product.stock})` : ''}</option>
                     ))}
                   </select>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-1">Type</label>
-                    <select 
-                      value={formData.type} 
+                    <select
+                      value={formData.type}
                       onChange={e => setFormData({ ...formData, type: e.target.value as any })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white"
                     >
@@ -162,9 +162,11 @@ export function StockAdjustments() {
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-1">Quantity</label>
-                    <input 
-                      type="number" min="1" required
-                      value={formData.quantity} 
+                    <input
+                      type="number"
+                      min="1"
+                      required
+                      value={formData.quantity}
                       onChange={e => setFormData({ ...formData, quantity: parseInt(e.target.value) || 0 })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                     />
@@ -172,8 +174,8 @@ export function StockAdjustments() {
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Reason</label>
-                  <select 
-                    value={formData.reason} 
+                  <select
+                    value={formData.reason}
                     onChange={e => setFormData({ ...formData, reason: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white"
                   >
@@ -187,12 +189,12 @@ export function StockAdjustments() {
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Notes (Optional)</label>
-                  <textarea 
+                  <textarea
                     rows={2}
-                    value={formData.notes} 
+                    value={formData.notes}
                     onChange={e => setFormData({ ...formData, notes: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 resize-none"
-                  ></textarea>
+                  />
                 </div>
               </div>
               <div className="p-6 border-t border-gray-100 bg-gray-50 flex justify-end gap-3 rounded-b-2xl">
