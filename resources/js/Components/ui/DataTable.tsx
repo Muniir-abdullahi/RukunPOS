@@ -60,6 +60,8 @@ export interface DataTableProps<T> {
   className?: string;
 }
 
+const DEFAULT_FILTERS: Record<string, any> = {};
+
 const SkeletonRow = ({ columns }: { columns: number }) => (
   <tr className="border-b border-gray-100">
     {Array.from({ length: columns }).map((_, i) => (
@@ -120,7 +122,7 @@ export function DataTable<T>({
   columns,
   filters = [],
   onFilter = () => {},
-  initialFilters = {},
+  initialFilters = DEFAULT_FILTERS,
   loading = false,
   skeletonRows = 10,
   rowKey,

@@ -111,11 +111,11 @@ const NavItemGroup: React.FC<{ item: any; onClose?: () => void; collapsed?: bool
         onClick={onClose}
         title={collapsed ? item.name : undefined}
         className={cn(
-          "group flex items-center rounded-md text-sm font-medium transition-all duration-200 relative mb-0.5 border-l-2",
+          "group flex items-center rounded-md text-sm font-medium transition-all duration-200 relative mb-0.5",
           collapsed ? "justify-center p-3" : "px-3 py-2.5",
           isActive 
-            ? "bg-primary-light text-primary-text border-primary font-semibold" 
-            : "border-transparent text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+            ? "border-l-2 border-primary bg-primary-light text-primary-text font-semibold" 
+            : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
         )}
       >
         <item.icon className={cn("w-5 h-5 shrink-0 transition-colors", isActive ? "text-primary" : "text-gray-400 group-hover:text-gray-600")} />
@@ -139,7 +139,7 @@ const NavItemGroup: React.FC<{ item: any; onClose?: () => void; collapsed?: bool
         onClick={handleGroupClick}
         title={collapsed ? item.name : undefined}
         className={cn(
-          "w-full group flex items-center rounded-md text-sm font-medium transition-all duration-200 relative border-l-2",
+          "w-full group flex items-center rounded-md text-sm font-medium transition-all duration-200 relative",
           collapsed ? "justify-center p-3" : "justify-between px-3 py-2.5",
           isOpen ? "text-gray-900" : "text-gray-600 hover:bg-gray-100/80 hover:text-gray-900"
         )}
@@ -158,9 +158,9 @@ const NavItemGroup: React.FC<{ item: any; onClose?: () => void; collapsed?: bool
               href={child.path}
               onClick={onClose}
               className={cn(
-                "block px-3 py-1.5 text-[13px] rounded-lg transition-all duration-200 whitespace-nowrap",
+                "block px-3 py-1.5 text-[13px] rounded-md transition-all duration-200 whitespace-nowrap",
                 (pathname === child.path || pathname.startsWith(`${child.path}/`))
-                  ? "bg-primary-light text-primary-text font-semibold shadow-sm border border-primary-100/50"
+                  ? "border-l-2 border-primary bg-primary-light text-primary-text font-semibold shadow-sm"
                   : "text-gray-500 hover:text-gray-900 hover:bg-gray-50 font-medium"
               )}
             >
