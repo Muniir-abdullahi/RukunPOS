@@ -18,5 +18,14 @@ export default function Page() {
     canEdit: true,
     canDelete: true,
     createLabel: 'Add Expense',
+    formDefaults: { expense_date: new Date().toISOString().slice(0, 10), amount: 0 },
+    formFields: [
+      { key: 'expense_category_id', label: 'Expense Category', type: 'select', required: true, optionsProp: 'expenseCategories' },
+      { key: 'account_id', label: 'Account', type: 'select', required: true, optionsProp: 'accounts' },
+      { key: 'expense_date', label: 'Expense Date', type: 'date', required: true },
+      { key: 'amount', label: 'Amount', type: 'number', required: true },
+      { key: 'reference', label: 'Reference' },
+      { key: 'note', label: 'Note', type: 'textarea' },
+    ],
   }} />;
 }

@@ -15,6 +15,6 @@ class StoreExpenseRequest extends FormRequest
 
     public function rules(): array
     {
-        return ['expense_category_id' => ['nullable', 'integer', Rule::exists('expense_categories', 'id')], 'account_id' => ['required', 'integer', Rule::exists('accounts', 'id')], 'expense_date' => ['nullable', 'date'], 'amount' => ['required', 'numeric', 'min:0.01'], 'note' => ['nullable', 'string']];
+        return ['expense_category_id' => ['required', 'integer', Rule::exists('expense_categories', 'id')], 'account_id' => ['required', 'integer', Rule::exists('accounts', 'id')], 'expense_date' => ['required', 'date'], 'amount' => ['required', 'numeric', 'min:0.01'], 'reference' => ['nullable', 'string', 'max:255'], 'note' => ['nullable', 'string']];
     }
 }

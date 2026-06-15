@@ -17,5 +17,13 @@ export default function Page() {
     canCreate: true,
     canDelete: true,
     createLabel: 'New Transfer',
+    formDefaults: { transfer_date: new Date().toISOString().slice(0, 10), amount: 0 },
+    formFields: [
+      { key: 'from_account_id', label: 'From Account', type: 'select', required: true, optionsProp: 'accounts' },
+      { key: 'to_account_id', label: 'To Account', type: 'select', required: true, optionsProp: 'accounts' },
+      { key: 'transfer_date', label: 'Transfer Date', type: 'date', required: true },
+      { key: 'amount', label: 'Amount', type: 'number', required: true },
+      { key: 'note', label: 'Note', type: 'textarea' },
+    ],
   }} />;
 }

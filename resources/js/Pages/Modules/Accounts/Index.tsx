@@ -17,5 +17,12 @@ export default function Page() {
     canEdit: true,
     canDelete: true,
     createLabel: 'Add Account',
+    formDefaults: { type: 'cash', opening_balance: 0, status: 'active' },
+    formFields: [
+      { key: 'name', label: 'Name', required: true },
+      { key: 'type', label: 'Type', type: 'select', options: [{ value: 'cash', label: 'Cash' }, { value: 'bank', label: 'Bank' }, { value: 'mobile_money', label: 'Mobile Money' }] },
+      { key: 'opening_balance', label: 'Opening Balance', type: 'number' },
+      { key: 'status', label: 'Status', type: 'select', options: [{ value: 'active', label: 'Active' }, { value: 'inactive', label: 'Inactive' }] },
+    ],
   }} />;
 }
