@@ -11,7 +11,7 @@ export function Card({ className, ...props }: CardProps) {
   return (
     <div
       className={cn(
-        "rounded-xl border border-gray-200 bg-white text-gray-950 shadow-sm",
+        "rounded-lg border border-gray-200 bg-white text-gray-950 shadow-sm",
         className
       )}
       {...props}
@@ -38,7 +38,7 @@ export function CardTitle({
   return (
     <h3
       className={cn(
-        "text-lg font-semibold leading-none tracking-tight",
+        "text-lg font-semibold leading-none",
         className
       )}
       {...props}

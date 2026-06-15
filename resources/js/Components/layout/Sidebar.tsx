@@ -23,7 +23,7 @@ const SIDEBAR_ITEMS = [
     children: [
       { name: 'Point of Sale', path: '/pos' },
       { name: 'Orders', path: '/sales' },
-      { name: 'Returns & Exchanges', path: '/sales/return' },
+      { name: 'Returns & Exchanges', path: '/sales/returns' },
       { name: 'Quotations', path: '/quotations' },
     ]
   },
@@ -62,9 +62,9 @@ const SIDEBAR_ITEMS = [
     icon: Wallet,
     children: [
       { name: 'Expenses', path: '/expenses' },
-      { name: 'Accounts', path: '/accounting' },
-      { name: 'Transactions', path: '/accounting/statement' },
-      { name: 'Cash Flow', path: '/accounting/transfer' },
+      { name: 'Accounts', path: '/accounting/accounts' },
+      { name: 'Transactions', path: '/accounting/accounts' },
+      { name: 'Cash Flow', path: '/accounting/transfers' },
     ]
   },
   {
@@ -111,14 +111,14 @@ const NavItemGroup: React.FC<{ item: any; onClose?: () => void; collapsed?: bool
         onClick={onClose}
         title={collapsed ? item.name : undefined}
         className={cn(
-          "group flex items-center rounded-xl text-sm font-medium transition-all duration-200 relative mb-0.5",
-          collapsed ? "justify-center p-3" : "px-3 py-2",
+          "group flex items-center rounded-md text-sm font-medium transition-all duration-200 relative mb-0.5 border-l-2",
+          collapsed ? "justify-center p-3" : "px-3 py-2.5",
           isActive 
-            ? "bg-primary-50 text-primary-700 font-semibold" 
-            : "text-gray-600 hover:bg-gray-100/80 hover:text-gray-900"
+            ? "bg-primary-light text-primary-text border-primary font-semibold" 
+            : "border-transparent text-gray-600 hover:bg-gray-100 hover:text-gray-900"
         )}
       >
-        <item.icon className={cn("w-4 h-4 shrink-0 transition-colors", isActive ? "text-primary-600" : "text-gray-400 group-hover:text-gray-600")} />
+        <item.icon className={cn("w-5 h-5 shrink-0 transition-colors", isActive ? "text-primary" : "text-gray-400 group-hover:text-gray-600")} />
         {!collapsed && <span className="ml-3 tracking-wide">{item.name}</span>}
       </Link>
     );
@@ -139,13 +139,13 @@ const NavItemGroup: React.FC<{ item: any; onClose?: () => void; collapsed?: bool
         onClick={handleGroupClick}
         title={collapsed ? item.name : undefined}
         className={cn(
-          "w-full group flex items-center rounded-xl text-sm font-medium transition-all duration-200 relative",
-          collapsed ? "justify-center p-3" : "justify-between px-3 py-2",
+          "w-full group flex items-center rounded-md text-sm font-medium transition-all duration-200 relative border-l-2",
+          collapsed ? "justify-center p-3" : "justify-between px-3 py-2.5",
           isOpen ? "text-gray-900" : "text-gray-600 hover:bg-gray-100/80 hover:text-gray-900"
         )}
       >
         <div className="flex items-center">
-          <item.icon className={cn("w-4 h-4 shrink-0 transition-colors", isOpen ? "text-primary-600" : "text-gray-400 group-hover:text-gray-600")} />
+          <item.icon className={cn("w-5 h-5 shrink-0 transition-colors", isOpen ? "text-primary" : "text-gray-400 group-hover:text-gray-600")} />
           {!collapsed && <span className="ml-3 tracking-wide">{item.name}</span>}
         </div>
         {!collapsed && <ChevronDown className={cn("w-3.5 h-3.5 opacity-50 transition-transform shrink-0", isOpen && "rotate-180")} />}
@@ -160,7 +160,7 @@ const NavItemGroup: React.FC<{ item: any; onClose?: () => void; collapsed?: bool
               className={cn(
                 "block px-3 py-1.5 text-[13px] rounded-lg transition-all duration-200 whitespace-nowrap",
                 (pathname === child.path || pathname.startsWith(`${child.path}/`))
-                  ? "bg-primary-50 text-primary-700 font-semibold shadow-sm border border-primary-100/50"
+                  ? "bg-primary-light text-primary-text font-semibold shadow-sm border border-primary-100/50"
                   : "text-gray-500 hover:text-gray-900 hover:bg-gray-50 font-medium"
               )}
             >
@@ -175,12 +175,16 @@ const NavItemGroup: React.FC<{ item: any; onClose?: () => void; collapsed?: bool
 
 export function Sidebar({ className, onClose, collapsed = false, onExpand }: { className?: string; onClose?: () => void; collapsed?: boolean; onExpand?: () => void }) {
   return (
-    <div className={cn("flex flex-col bg-white border-r border-gray-100 h-full overflow-y-auto transition-all duration-300", collapsed ? "w-[72px]" : "w-[260px]", className)}>
-      <div className={cn("p-4 flex items-center h-16 shrink-0", collapsed ? "justify-center" : "space-x-3 px-6")}>
-        <div className="w-7 h-7 bg-primary-600 rounded-lg flex items-center justify-center shrink-0 shadow-sm">
+    <div className={cn("flex flex-col bg-white border-r border-gray-200 h-full overflow-y-auto transition-all duration-300", collapsed ? "w-16" : "w-60", className)}>
+      <div className={cn("p-4 flex items-center h-16 shrink-0 border-b border-gray-200", collapsed ? "justify-center" : "space-x-3 px-5")}>
+        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shrink-0 shadow-sm">
           <Package className="w-4 h-4 text-white" />
         </div>
-        {!collapsed && <span className="text-lg font-bold tracking-tight text-gray-900 shrink-0">SaleLite</span>}
+        {!collapsed && (
+          <span className="text-xl font-semibold text-gray-900 shrink-0 font-display">
+            Ruku<span className="text-primary">n</span><span className="ml-1 text-gray-500">POS</span>
+          </span>
+        )}
       </div>
       
       <div className={cn("flex-1 py-4 overflow-x-hidden", "px-3")}>

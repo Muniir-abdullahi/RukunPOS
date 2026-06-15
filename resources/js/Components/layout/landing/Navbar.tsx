@@ -24,7 +24,9 @@ export function Navbar() {
               <div className="w-8 h-8 bg-primary-600 rounded-md flex items-center justify-center">
                 <Package className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold tracking-tight text-gray-900">SaleLite</span>
+              <span className="text-xl font-semibold text-gray-900 font-display">
+                Ruku<span className="text-primary">n</span><span className="ml-1 text-gray-500">POS</span>
+              </span>
             </Link>
           </div>
 

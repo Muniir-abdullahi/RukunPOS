@@ -37,7 +37,7 @@ function DatabaseTablePage({ config }: { config: DatabaseTableConfig }) {
         </div>
         {config.canCreate && (
           <Link href={config.createPath ?? `${basePath}/create`}>
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2">
+            <Button className="bg-primary hover:bg-primary-dark text-white flex items-center gap-2">
               <Plus className="w-4 h-4" /> {config.createLabel ?? 'Add'}
             </Button>
           </Link>
@@ -58,7 +58,7 @@ function DatabaseTablePage({ config }: { config: DatabaseTableConfig }) {
           <div className="flex justify-end gap-2">
             {config.basePath && (
               <Link href={`${config.basePath}/${row.id}`}>
-                <Button variant="ghost" size="sm" className="w-8 h-8 p-0 text-gray-500 hover:text-blue-600">
+                <Button variant="ghost" size="sm" className="w-8 h-8 p-0 text-gray-500 hover:text-primary">
                   <Eye className="w-4 h-4" />
                 </Button>
               </Link>

@@ -15,7 +15,7 @@ export function Hero() {
         <div className="flex flex-col items-center text-center">
           <div className="inline-flex items-center rounded-full border border-primary-200 bg-primary-50 px-3 py-1 text-sm font-medium text-primary-600 mb-8">
             <span className="flex h-2 w-2 rounded-full bg-primary-500 mr-2"></span>
-            SaleLite v1.0 MVP is now live
+            RukunPOS v1.0 is now live
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 max-w-4xl mx-auto mb-6 leading-tight">

@@ -34,7 +34,7 @@ function GenericReport({ title, description, hideChart }: { title: string, descr
           <Button variant="outline" className="flex items-center gap-2 bg-white rounded-xl shadow-sm border-gray-200">
             <Download className="w-4 h-4" /> Export PDF
           </Button>
-          <Button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-sm">
+          <Button className="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white rounded-xl shadow-sm">
             <FileText className="w-4 h-4" /> Export Excel
           </Button>
         </div>
@@ -75,7 +75,7 @@ function GenericReport({ title, description, hideChart }: { title: string, descr
               <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#6b7280', fontSize: 12}} dy={10} />
               <YAxis axisLine={false} tickLine={false} tick={{fill: '#6b7280', fontSize: 12}} />
               <Tooltip cursor={{fill: '#f9fafb'}} contentStyle={{borderRadius: '12px', border: '1px solid #f3f4f6', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'}} />
-              <Bar dataKey="value" fill="#2563eb" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="value" fill="#1D9E75" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

@@ -24,7 +24,7 @@ function Page() {
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600">
                 <Package className="h-5 w-5 text-white" />
               </div>
-              <span className="text-xl font-bold tracking-tight">SaleLite</span>
+              <span className="text-xl font-bold tracking-tight">RukunPOS</span>
             </div>
             <div className="mt-16 max-w-sm">
               <p className="text-sm font-semibold uppercase tracking-wider text-primary-300">Retail workspace</p>
@@ -51,7 +51,7 @@ function Page() {
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600">
                   <Package className="h-5 w-5 text-white" />
                 </div>
-                <span className="text-xl font-bold tracking-tight text-gray-900">SaleLite</span>
+                <span className="text-xl font-bold tracking-tight text-gray-900">RukunPOS</span>
               </div>
             </div>
 
@@ -61,7 +61,7 @@ function Page() {
                 Secure staff access
               </div>
               <h1 className="text-3xl font-black tracking-tight text-gray-900">Welcome back</h1>
-              <p className="mt-2 text-sm leading-6 text-gray-500">Enter your account details to open the SaleLite dashboard.</p>
+              <p className="mt-2 text-sm leading-6 text-gray-500">Enter your account details to open the RukunPOS dashboard.</p>
             </div>
 
             <form className="space-y-5" onSubmit={handleSubmit}>

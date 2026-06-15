@@ -114,7 +114,7 @@ export function ProductList({
             </Button>
           </Link>
           <Link href="/products/new">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2">
+            <Button className="bg-primary hover:bg-primary-dark text-white flex items-center gap-2">
               <Plus className="w-4 h-4" /> Add Product
             </Button>
           </Link>
@@ -153,12 +153,12 @@ export function ProductList({
         actions={product => (
           <div className="flex justify-end gap-2">
             <Link href={`/products/${product.id}`}>
-              <Button variant="ghost" size="sm" className="w-8 h-8 p-0 text-gray-500 hover:text-blue-600">
+              <Button variant="ghost" size="sm" className="w-8 h-8 p-0 text-gray-500 hover:text-primary">
                 <Eye className="w-4 h-4" />
               </Button>
             </Link>
             <Link href={`/products/${product.id}/edit`}>
-              <Button variant="ghost" size="sm" className="w-8 h-8 p-0 text-gray-500 hover:text-blue-600">
+              <Button variant="ghost" size="sm" className="w-8 h-8 p-0 text-gray-500 hover:text-primary">
                 <Edit2 className="w-4 h-4" />
               </Button>
             </Link>

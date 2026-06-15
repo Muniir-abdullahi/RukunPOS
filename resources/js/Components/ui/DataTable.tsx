@@ -172,7 +172,7 @@ export function DataTable<T>({
   const allVisibleSelected = rows.length > 0 && rows.every((row, index) => selectedIds.includes(getRowId(row, index)));
 
   return (
-    <div className={cn("bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col", className)}>
+    <div className={cn("bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden flex flex-col", className)}>
       {filters.length > 0 && (
         <div className="p-4 border-b border-gray-100 flex flex-col sm:flex-row gap-3 justify-between items-center bg-gray-50/30">
           <div className="flex flex-col sm:flex-row gap-3 w-full">
@@ -182,7 +182,7 @@ export function DataTable<T>({
                   <select
                     value={filterState[filter.key] ?? ''}
                     onChange={event => updateFilter(filter.key, event.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium"
+                    className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-md text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-medium"
                   >
                     <option value="">{filter.placeholder || filter.label}</option>
                     {filter.options?.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
@@ -193,7 +193,7 @@ export function DataTable<T>({
                     value={filterState[filter.key] ?? ''}
                     onChange={event => updateFilter(filter.key, event.target.value, filter.type === 'text')}
                     placeholder={filter.placeholder || filter.label}
-                    className="w-full px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium"
+                    className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-md text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-medium"
                   />
                 )}
               </div>
@@ -215,7 +215,7 @@ export function DataTable<T>({
                     type="checkbox"
                     checked={allVisibleSelected}
                     onChange={event => setSelectedIds(event.target.checked ? rows.map(getRowId) : [])}
-                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    className="rounded border-gray-300 text-primary focus:ring-primary"
                   />
                 </th>
               )}
@@ -247,7 +247,7 @@ export function DataTable<T>({
                           type="checkbox"
                           checked={selectedIds.includes(id)}
                           onChange={event => setSelectedIds(current => event.target.checked ? [...current, id] : current.filter(value => value !== id))}
-                          className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                          className="rounded border-gray-300 text-primary focus:ring-primary"
                         />
                       </td>
                     )}
@@ -294,7 +294,7 @@ export function DataTable<T>({
                   key={page}
                   variant={page === meta.current_page ? 'default' : 'outline'}
                   size="sm"
-                  className={cn("px-3 h-8 rounded-lg border-gray-200", page === meta.current_page && "bg-teal-600 hover:bg-teal-700 text-white")}
+                  className={cn("px-3 h-8 rounded-md border-gray-300", page === meta.current_page && "bg-primary hover:bg-primary-dark text-white")}
                   onClick={() => updateFilter('page', page)}
                 >
                   {page}

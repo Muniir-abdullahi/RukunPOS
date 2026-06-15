@@ -90,8 +90,8 @@ export const UsersConfig: CrudConfig = {
     { key: 'status', label: 'Status', type: 'select', options: [{value: 'Active', label: 'Active'}, {value: 'Inactive', label: 'Inactive'}] },
   ],
   mockData: [
-    { id: 1, name: 'Admin User', email: 'admin@salelite.com', role: 'Admin', status: 'Active' },
-    { id: 2, name: 'Cashier One', email: 'cashier@salelite.com', role: 'Cashier', status: 'Active' },
+    { id: 1, name: 'Admin User', email: 'admin@rukunpos.app', role: 'Admin', status: 'Active' },
+    { id: 2, name: 'Cashier One', email: 'cashier@rukunpos.app', role: 'Cashier', status: 'Active' },
   ]
 };
 
@@ -481,7 +481,7 @@ export const AuditLogsConfig: CrudConfig = {
   columns: [
     { key: 'date', label: 'Date', type: 'text' },
     { key: 'user', label: 'User', type: 'text' },
-    { key: 'action', label: 'Action', type: 'badge', badgeColors: { Create: 'bg-green-100 text-green-800', Update: 'bg-yellow-100 text-yellow-800', Delete: 'bg-red-100 text-red-800', Login: 'bg-blue-100 text-blue-800' } },
+    { key: 'action', label: 'Action', type: 'badge', badgeColors: { Create: 'bg-green-100 text-green-800', Update: 'bg-yellow-100 text-yellow-800', Delete: 'bg-red-100 text-red-800', Login: 'bg-primary-light text-primary-text' } },
     { key: 'module', label: 'Module', type: 'text' },
     { key: 'description', label: 'Description', type: 'text' },
   ],

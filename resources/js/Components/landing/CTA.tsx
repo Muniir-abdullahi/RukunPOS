@@ -15,7 +15,7 @@ export function CTA() {
           Ready to simplify your retail business?
         </h2>
         <p className="text-xl text-primary-100 mb-10 max-w-2xl mx-auto">
-          Start managing your store with SaleLite today. Get clear visibility into your inventory, sales, and profits.
+          Start managing your store with RukunPOS today. Get clear visibility into your inventory, sales, and profits.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

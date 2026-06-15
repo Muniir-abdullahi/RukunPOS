@@ -42,7 +42,7 @@ export function ProductDetail() {
             </Button>
           </Link>
           <Link href={`/products/${id}/edit`}>
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2">
+            <Button className="bg-primary hover:bg-primary-dark text-white flex items-center gap-2">
               <Edit2 className="w-4 h-4" /> Edit Product
             </Button>
           </Link>
@@ -121,9 +121,9 @@ export function ProductDetail() {
                   <span className="text-sm font-medium text-gray-600">Cost Price</span>
                   <span className="text-base font-bold text-gray-900 tabular-nums">${product.costPrice.toFixed(2)}</span>
                </div>
-               <div className="flex justify-between items-center p-3 bg-blue-50/50 border border-blue-100 rounded-lg">
-                  <span className="text-sm font-semibold text-blue-800">Selling Price</span>
-                  <span className="text-lg font-black text-blue-700 tabular-nums">${product.sellingPrice.toFixed(2)}</span>
+               <div className="flex justify-between items-center p-3 bg-primary-light/60 border border-primary/30 rounded-lg">
+                  <span className="text-sm font-semibold text-primary-text">Selling Price</span>
+                  <span className="text-lg font-black text-primary-text tabular-nums">${product.sellingPrice.toFixed(2)}</span>
                </div>
                <div className="flex justify-between items-center px-2 pt-2">
                   <span className="text-xs font-medium text-gray-500">Gross Margin</span>

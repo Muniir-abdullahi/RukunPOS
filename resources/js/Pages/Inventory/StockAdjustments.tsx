@@ -93,7 +93,7 @@ export function StockAdjustments({
           <h1 className="text-2xl font-bold text-gray-900">Stock Adjustments</h1>
           <p className="text-sm text-gray-500 mt-1">Record manual inventory increases or decreases</p>
         </div>
-        <Button onClick={() => setIsModalOpen(true)} className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2">
+        <Button onClick={() => setIsModalOpen(true)} className="bg-primary hover:bg-primary-dark text-white flex items-center gap-2">
           <Plus className="w-4 h-4" /> New Adjustment
         </Button>
       </div>
@@ -126,7 +126,7 @@ export function StockAdjustments({
                       required
                       value={formData.warehouseId}
                       onChange={e => setFormData({ ...formData, warehouseId: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary bg-white"
                     >
                       <option value="" disabled>Select warehouse...</option>
                       {warehousesProp.map(warehouse => <option key={warehouse.id} value={warehouse.id}>{warehouse.name}</option>)}
@@ -140,7 +140,7 @@ export function StockAdjustments({
                     autoFocus
                     value={formData.productId}
                     onChange={e => setFormData({ ...formData, productId: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary bg-white"
                   >
                     <option value="" disabled>Select product...</option>
                     {productRows.map(product => (
@@ -154,7 +154,7 @@ export function StockAdjustments({
                     <select
                       value={formData.type}
                       onChange={e => setFormData({ ...formData, type: e.target.value as any })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary bg-white"
                     >
                       <option value="Increase">Increase (+)</option>
                       <option value="Decrease">Decrease (-)</option>
@@ -168,7 +168,7 @@ export function StockAdjustments({
                       required
                       value={formData.quantity}
                       onChange={e => setFormData({ ...formData, quantity: parseInt(e.target.value) || 0 })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary"
                     />
                   </div>
                 </div>
@@ -177,7 +177,7 @@ export function StockAdjustments({
                   <select
                     value={formData.reason}
                     onChange={e => setFormData({ ...formData, reason: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary bg-white"
                   >
                     <option value="Restocking">Restocking</option>
                     <option value="Damaged">Damaged/Defective</option>
@@ -193,13 +193,13 @@ export function StockAdjustments({
                     rows={2}
                     value={formData.notes}
                     onChange={e => setFormData({ ...formData, notes: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 resize-none"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary resize-none"
                   />
                 </div>
               </div>
               <div className="p-6 border-t border-gray-100 bg-gray-50 flex justify-end gap-3 rounded-b-2xl">
                 <Button variant="outline" type="button" onClick={() => setIsModalOpen(false)}>Cancel</Button>
-                <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">Save Adjustment</Button>
+                <Button type="submit" className="bg-primary hover:bg-primary-dark text-white">Save Adjustment</Button>
               </div>
             </form>
           </div>

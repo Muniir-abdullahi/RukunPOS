@@ -173,10 +173,12 @@ export function POS() {
           </Link>
           
           <div className="flex items-center">
-            <div className="w-7 h-7 bg-blue-600 rounded-md flex items-center justify-center mr-2 shadow-sm">
+            <div className="w-7 h-7 bg-primary rounded-md flex items-center justify-center mr-2 shadow-sm">
               <ShoppingCart className="w-3.5 h-3.5 text-white" />
             </div>
-            <h1 className="text-lg font-bold text-gray-900 tracking-tight hidden lg:block mr-2">SaleLite</h1>
+            <h1 className="text-lg font-semibold text-gray-900 hidden lg:block mr-2 font-display">
+              Ruku<span className="text-primary">n</span><span className="ml-1 text-gray-500">POS</span>
+            </h1>
             <span className="hidden xl:inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 mr-4">
               Main Store
             </span>
@@ -189,7 +191,7 @@ export function POS() {
               placeholder="Scan barcode or search..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-gray-100/80 border-transparent rounded-lg text-sm focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium text-gray-900 placeholder:text-gray-500"
+              className="w-full pl-9 pr-3 py-1.5 bg-gray-100/80 border-transparent rounded-lg text-sm focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-medium text-gray-900 placeholder:text-gray-500"
             />
           </div>
         </div>
@@ -206,7 +208,7 @@ export function POS() {
             <select 
               value={selectedCustomerId}
               onChange={(e) => setSelectedCustomerId(e.target.value)}
-              className="w-full pl-8 pr-3 py-1.5 bg-gray-100/80 border-transparent rounded-lg text-sm focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 appearance-none font-medium text-gray-700 cursor-pointer transition-all"
+              className="w-full pl-8 pr-3 py-1.5 bg-gray-100/80 border-transparent rounded-lg text-sm focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 appearance-none font-medium text-gray-700 cursor-pointer transition-all"
             >
               {posCustomers.map(c => (
                 <option key={c.id} value={c.id}>{c.name}</option>
@@ -218,7 +220,7 @@ export function POS() {
 
           <Button variant="ghost" size="sm" onClick={() => setRecentOpen(true)} className="hidden sm:flex items-center gap-1.5 text-gray-600 hover:text-gray-900 font-medium rounded-lg h-8 px-2">
             <FileClock className="w-4 h-4" /> <span className="hidden xl:inline">Recent</span>
-            {recentSales.length > 0 && <span className="ml-1 bg-blue-100 text-blue-700 py-0.5 px-1.5 rounded text-[10px] tabular-nums">{recentSales.length}</span>}
+            {recentSales.length > 0 && <span className="ml-1 bg-primary-light text-primary-text py-0.5 px-1.5 rounded text-[10px] tabular-nums">{recentSales.length}</span>}
           </Button>
           <Button variant="ghost" size="sm" onClick={() => setHeldSalesOpen(true)} className="hidden md:flex items-center gap-1.5 text-gray-600 hover:text-gray-900 font-medium rounded-lg h-8 px-2">
             <Pause className="w-4 h-4" /> <span className="hidden xl:inline">Held</span>
@@ -244,7 +246,7 @@ export function POS() {
                <select 
                  value={selectedCustomerId}
                  onChange={(e) => setSelectedCustomerId(e.target.value)}
-                 className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 appearance-none font-medium text-gray-700"
+                 className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:border-primary focus:ring-1 focus:ring-primary appearance-none font-medium text-gray-700"
                >
                  {posCustomers.map(c => (
                    <option key={c.id} value={c.id}>{c.name}</option>
@@ -262,7 +264,7 @@ export function POS() {
               </div>
             ) : (
               cart.map((item) => (
-                <div key={item.product.id} className="relative group flex items-start gap-2 bg-white p-2 rounded-lg border border-gray-100 shadow-sm hover:border-blue-200/60 transition-all animate-in slide-in-from-top-2">
+                <div key={item.product.id} className="relative group flex items-start gap-2 bg-white p-2 rounded-lg border border-gray-100 shadow-sm hover:border-primary/40 transition-all animate-in slide-in-from-top-2">
                   
                   {/* Thumbnail */}
                   <div className="w-12 h-12 rounded-md bg-gray-50 flex items-center justify-center overflow-hidden shrink-0 border border-gray-100/60 p-1">
@@ -303,7 +305,7 @@ export function POS() {
                 <span className="font-semibold text-gray-900 tabular-nums">${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between items-center text-[13px] group cursor-pointer" onClick={() => setDiscountModalOpen(true)}>
-                <span className="text-gray-500 border-b border-dashed border-gray-300 group-hover:border-blue-400 group-hover:text-blue-600 transition-colors flex items-center gap-1"><Percent className="w-3 h-3"/> Discount {(discountRate > 0) ? `(${(discountRate*100).toFixed(0)}%)` : ''}</span>
+                <span className="text-gray-500 border-b border-dashed border-gray-300 group-hover:border-primary group-hover:text-primary transition-colors flex items-center gap-1"><Percent className="w-3 h-3"/> Discount {(discountRate > 0) ? `(${(discountRate*100).toFixed(0)}%)` : ''}</span>
                 <span className="font-semibold text-gray-900 tabular-nums text-red-600">-${discount.toFixed(2)}</span>
               </div>
               <div className="flex justify-between items-center text-[13px]">
@@ -325,7 +327,7 @@ export function POS() {
                   <Button 
                     key={pm.id}
                     variant="secondary" 
-                    className="h-9 px-1 text-[11px] font-semibold bg-gray-100 text-gray-700 border border-gray-200 rounded-lg hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 transition-colors" 
+                    className="h-9 px-1 text-[11px] font-semibold bg-gray-100 text-gray-700 border border-gray-200 rounded-lg hover:bg-primary-light hover:text-primary-text hover:border-primary/40 transition-colors" 
                     disabled={cart.length === 0} 
                     onClick={() => { setSelectedPayment(pm); setCheckoutOpen(true); }}
                   >
@@ -342,7 +344,7 @@ export function POS() {
                   "w-full h-12 text-lg font-bold rounded-xl shadow-sm transition-all flex items-center justify-center gap-2",
                   cart.length === 0 
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed border-0" 
-                    : "bg-blue-600 hover:bg-blue-700 text-white hover:shadow-md border-0"
+                    : "bg-primary hover:bg-primary-dark text-white hover:shadow-md border-0"
                 )}
                 disabled={cart.length === 0}
                 onClick={() => { setSelectedPayment(paymentMethods[0]); setCheckoutOpen(true); }}
@@ -375,7 +377,7 @@ export function POS() {
                   className={cn(
                     "px-3 py-1.5 rounded-lg text-[13px] font-semibold transition-all border whitespace-nowrap",
                     activeCategory === cat.id 
-                      ? "bg-blue-50 text-blue-700 border-blue-200 shadow-sm" 
+                      ? "bg-primary-light text-primary-text border-primary/40 shadow-sm" 
                       : "bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-900 shadow-sm"
                   )}
                 >
@@ -397,7 +399,7 @@ export function POS() {
                     "bg-white rounded-xl overflow-hidden shadow-sm border transition-all group text-left flex flex-col relative",
                     product.stock === 0 
                       ? "opacity-60 cursor-not-allowed border-gray-100" 
-                      : "border-gray-200/60 hover:border-blue-300 hover:shadow-md cursor-pointer active:scale-[0.98]"
+                      : "border-gray-200/60 hover:border-primary hover:shadow-md cursor-pointer active:scale-[0.98]"
                   )}
                 >
                   <div className="aspect-square bg-white relative overflow-hidden flex items-center justify-center border-b border-gray-50/50 p-2">
@@ -443,9 +445,9 @@ export function POS() {
             </div>
             
             <div className="p-4 sm:p-6 overflow-y-auto">
-              <div className="bg-blue-50/50 rounded-2xl p-6 flex flex-col items-center justify-center mb-6 border border-blue-100">
-                <p className="text-sm text-blue-600 font-bold tracking-wide uppercase mb-1">Total Due</p>
-                <p className="text-5xl font-extrabold text-blue-700 tabular-nums tracking-tight">${total.toFixed(2)}</p>
+              <div className="bg-primary-light/60 rounded-2xl p-6 flex flex-col items-center justify-center mb-6 border border-primary/30">
+                <p className="text-sm text-primary font-bold tracking-wide uppercase mb-1">Total Due</p>
+                <p className="text-5xl font-extrabold text-primary-text tabular-nums tracking-tight">${total.toFixed(2)}</p>
               </div>
               
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
@@ -454,16 +456,16 @@ export function POS() {
                     key={method.id} 
                     onClick={() => setSelectedPayment(method)}
                     className={cn(
-                      "flex flex-col items-center justify-center p-4 rounded-xl border transition-all focus:outline-none focus:ring-2 focus:ring-blue-500",
+                      "flex flex-col items-center justify-center p-4 rounded-xl border transition-all focus:outline-none focus:ring-2 focus:ring-primary",
                       selectedPayment?.id === method.id 
-                        ? "border-blue-500 bg-blue-50 text-blue-700" 
-                        : "border-gray-200 hover:border-blue-300 hover:bg-blue-50/50 text-gray-600"
+                        ? "border-primary bg-primary-light text-primary-text" 
+                        : "border-gray-200 hover:border-primary hover:bg-primary-light/60 text-gray-600"
                     )}
                   >
-                     {method.type === 'cash' && <Banknote className={cn("w-6 h-6 mb-2", selectedPayment?.id === method.id ? "text-blue-600" : "text-gray-500")} />}
-                     {method.type === 'card' && <CreditCard className={cn("w-6 h-6 mb-2", selectedPayment?.id === method.id ? "text-blue-600" : "text-gray-500")} />}
-                     {method.type === 'mobile_money' && <Smartphone className={cn("w-6 h-6 mb-2", selectedPayment?.id === method.id ? "text-blue-600" : "text-gray-500")} />}
-                     {method.type === 'split' && <HelpCircle className={cn("w-6 h-6 mb-2", selectedPayment?.id === method.id ? "text-blue-600" : "text-gray-500")} />}
+                     {method.type === 'cash' && <Banknote className={cn("w-6 h-6 mb-2", selectedPayment?.id === method.id ? "text-primary" : "text-gray-500")} />}
+                     {method.type === 'card' && <CreditCard className={cn("w-6 h-6 mb-2", selectedPayment?.id === method.id ? "text-primary" : "text-gray-500")} />}
+                     {method.type === 'mobile_money' && <Smartphone className={cn("w-6 h-6 mb-2", selectedPayment?.id === method.id ? "text-primary" : "text-gray-500")} />}
+                     {method.type === 'split' && <HelpCircle className={cn("w-6 h-6 mb-2", selectedPayment?.id === method.id ? "text-primary" : "text-gray-500")} />}
                      <span className="text-sm font-semibold">{method.name}</span>
                   </button>
                 ))}
@@ -477,7 +479,7 @@ export function POS() {
                     value={amountReceivedInput}
                     onChange={(e) => setAmountReceivedInput(e.target.value)}
                     placeholder={total.toFixed(2)}
-                    className="w-full border border-gray-200 rounded-xl shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-lg px-4 py-3 bg-white font-medium transition-all" 
+                    className="w-full border border-gray-200 rounded-xl shadow-sm focus:border-primary focus:ring-2 focus:ring-primary/20 text-lg px-4 py-3 bg-white font-medium transition-all" 
                   />
                 </div>
                 <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100">
@@ -491,11 +493,11 @@ export function POS() {
             
             <div className="p-4 sm:p-6 border-t border-gray-100 bg-gray-50 flex flex-col sm:flex-row gap-3">
                <label className="flex items-center gap-2 cursor-pointer mr-auto mb-3 sm:mb-0">
-                 <input type="checkbox" defaultChecked className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 w-4.5 h-4.5 transition-all" />
+                 <input type="checkbox" defaultChecked className="rounded border-gray-300 text-primary focus:ring-primary w-4.5 h-4.5 transition-all" />
                  <span className="text-sm text-gray-700 font-semibold">Print Receipt</span>
                </label>
                <Button variant="outline" className="w-full sm:w-auto h-12 rounded-xl text-gray-600 border-gray-200 hover:bg-gray-100 font-semibold" onClick={() => setCheckoutOpen(false)}>Cancel</Button>
-               <Button className="w-full sm:w-auto h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold px-8 shadow-sm" onClick={handleCompleteSale}>Complete Sale</Button>
+               <Button className="w-full sm:w-auto h-12 bg-primary hover:bg-primary-dark text-white rounded-xl font-bold px-8 shadow-sm" onClick={handleCompleteSale}>Complete Sale</Button>
             </div>
           </div>
         </div>
@@ -519,7 +521,7 @@ export function POS() {
 
             <div className="flex gap-3 w-full max-w-[300px] shrink-0">
                <Button variant="outline" className="flex-1 bg-white hover:bg-gray-50 text-gray-900 border-none shadow-sm h-12 rounded-xl font-bold" onClick={() => setReceiptOpen(false)}>New Sale</Button>
-               <Button className="flex-1 bg-blue-600 hover:bg-blue-500 text-white h-12 rounded-xl font-bold shadow-lg" onClick={printReceiptAction}>
+               <Button className="flex-1 bg-primary hover:bg-primary-dark text-white h-12 rounded-xl font-bold shadow-lg" onClick={printReceiptAction}>
                  <Printer className="w-4 h-4 mr-2" /> Print
                </Button>
             </div>
@@ -539,12 +541,12 @@ export function POS() {
                   type="number" 
                   value={customDiscount}
                   onChange={(e) => setCustomDiscount(e.target.value)}
-                  className="w-full border border-gray-200 rounded-lg shadow-sm focus:border-blue-500 focus:ring-2 py-2 px-3 text-gray-900" 
+                  className="w-full border border-gray-200 rounded-lg shadow-sm focus:border-primary focus:ring-2 py-2 px-3 text-gray-900" 
                 />
               </div>
               <div className="flex gap-3">
                  <Button variant="outline" className="flex-1" onClick={() => setDiscountModalOpen(false)}>Cancel</Button>
-                 <Button className="flex-1 bg-blue-600" onClick={() => {
+                 <Button className="flex-1 bg-primary" onClick={() => {
                    setDiscount((parseFloat(customDiscount) || 0) / 100);
                    setDiscountModalOpen(false);
                  }}>Apply</Button>
@@ -631,7 +633,7 @@ export function POS() {
                       <div key={sale.id} className="p-5 border border-gray-100 rounded-2xl hover:border-gray-200 transition-all bg-white shadow-sm">
                         <div className="flex justify-between items-start mb-3">
                           <div>
-                            <span className="text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded-md uppercase tracking-wider">{sale.id}</span>
+                            <span className="text-[10px] font-bold text-primary bg-primary-light border border-primary/30 px-2 py-0.5 rounded-md uppercase tracking-wider">{sale.id}</span>
                             <h4 className="font-semibold text-gray-900 mt-2">{sale.customer?.name || 'Walk-in'}</h4>
                           </div>
                           <span className="font-bold text-green-600 text-lg tabular-nums">${sale.total.toFixed(2)}</span>

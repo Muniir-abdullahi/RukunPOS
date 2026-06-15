@@ -44,7 +44,7 @@ export function StatusBadge({ status, colorMap }: { status: string, colorMap?: R
   const map: Record<string, string> = colorMap || {
     'Active': 'bg-green-100 text-green-800',
     'Inactive': 'bg-gray-100 text-gray-800',
-    'Completed': 'bg-blue-100 text-blue-800',
+    'Completed': 'bg-primary-light text-primary-text',
     'Pending': 'bg-yellow-100 text-yellow-800',
     'Cancelled': 'bg-red-100 text-red-800',
     'Paid': 'bg-emerald-100 text-emerald-800',
@@ -94,7 +94,7 @@ function ListPage({ config, tableData, filterDefaults = {} }: { config: CrudConf
         </div>
         {!config.disableAdd && (
           <Link href={`${config.basePath}/add`}>
-            <Button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-sm">
+            <Button className="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white rounded-xl shadow-sm">
               <Plus className="w-4 h-4" /> Add {config.entityName}
             </Button>
           </Link>
@@ -114,7 +114,7 @@ function ListPage({ config, tableData, filterDefaults = {} }: { config: CrudConf
         actions={hasActions ? row => (
           <div className="flex items-center justify-end gap-1 opacity-60 group-hover:opacity-100 transition-opacity">
             <Link href={`${config.basePath}/${row.id}`}>
-              <button className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"><Eye className="w-4 h-4" /></button>
+              <button className="p-1.5 text-gray-500 hover:text-primary hover:bg-primary-light rounded-lg transition-colors"><Eye className="w-4 h-4" /></button>
             </Link>
             {!config.disableEdit && (
               <Link href={`${config.basePath}/${row.id}/edit`}>
@@ -197,11 +197,11 @@ function FormPage({ config, isEdit = false, id }: { config: CrudConfig, isEdit?:
                           type="checkbox" 
                           checked={Boolean(formData[field.key])}
                           onChange={event => setField(field.key, event.target.checked)}
-                          className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                          className="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary"
                         />
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-sm font-semibold text-gray-900 group-hover:text-blue-700 transition-colors">{field.label} {field.required && <span className="text-red-500">*</span>}</span>
+                        <span className="text-sm font-semibold text-gray-900 group-hover:text-primary-text transition-colors">{field.label} {field.required && <span className="text-red-500">*</span>}</span>
                         {field.hint && <span className="text-xs text-gray-500 mt-0.5">{field.hint}</span>}
                       </div>
                     </label>
@@ -217,7 +217,7 @@ function FormPage({ config, isEdit = false, id }: { config: CrudConfig, isEdit?:
                     </label>
                     {field.hint && (
                       <div className="group relative flex items-center justify-center">
-                        <div className="w-4 h-4 rounded-full bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center text-[10px] font-bold cursor-help tooltip-trigger">
+                        <div className="w-4 h-4 rounded-full bg-primary-light border border-primary/40 text-primary flex items-center justify-center text-[10px] font-bold cursor-help tooltip-trigger">
                           i
                         </div>
                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-48 p-2 bg-gray-900 text-white text-xs rounded-lg shadow-lg z-10 text-center">
@@ -232,11 +232,11 @@ function FormPage({ config, isEdit = false, id }: { config: CrudConfig, isEdit?:
                     <textarea 
                       value={formData[field.key] || ''}
                       onChange={event => setField(field.key, event.target.value)}
-                      className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all min-h-[100px]"
+                      className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all min-h-[100px]"
                       placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}...`}
                     />
                   ) : field.type === 'wysiwyg' ? (
-                    <div className="w-full bg-white border border-gray-200 rounded-xl overflow-hidden focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20 transition-all">
+                    <div className="w-full bg-white border border-gray-200 rounded-xl overflow-hidden focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
                       <div className="bg-gray-50 border-b border-gray-200 p-2 flex gap-1">
                         <div className="w-8 h-8 rounded bg-white border border-gray-200 flex items-center justify-center text-gray-600 font-serif font-bold cursor-not-allowed">B</div>
                         <div className="w-8 h-8 rounded bg-white border border-gray-200 flex items-center justify-center text-gray-600 font-serif italic cursor-not-allowed">I</div>
@@ -261,7 +261,7 @@ function FormPage({ config, isEdit = false, id }: { config: CrudConfig, isEdit?:
                     <select 
                       value={formData[field.key] || ''}
                       onChange={event => setField(field.key, event.target.value)}
-                      className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium appearance-none"
+                      className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-medium appearance-none"
                     >
                       <option value="">{field.placeholder || `Select ${field.label}...`}</option>
                       {field.options?.map(opt => (
@@ -273,7 +273,7 @@ function FormPage({ config, isEdit = false, id }: { config: CrudConfig, isEdit?:
                       type={field.type}
                       value={formData[field.key] || ''}
                       onChange={event => setField(field.key, field.type === 'number' ? Number(event.target.value) : event.target.value)}
-                      className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                      className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                       placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}...`}
                     />
                   )}
@@ -287,7 +287,7 @@ function FormPage({ config, isEdit = false, id }: { config: CrudConfig, isEdit?:
           <Button variant="outline" className="rounded-xl border-gray-200 text-gray-600 bg-white hover:bg-gray-50 h-11 px-6 font-semibold" onClick={() => router.visit(config.basePath)}>
             Cancel
           </Button>
-          <Button className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white h-11 px-6 font-semibold flex items-center gap-2 shadow-sm" onClick={submit}>
+          <Button className="rounded-xl bg-primary hover:bg-primary-dark text-white h-11 px-6 font-semibold flex items-center gap-2 shadow-sm" onClick={submit}>
             <Save className="w-4 h-4" /> {isEdit ? 'Update' : 'Save'} {config.entityName}
           </Button>
         </div>

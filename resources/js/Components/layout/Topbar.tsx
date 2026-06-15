@@ -10,7 +10,7 @@ export function Topbar({ onMenuClick }: { onMenuClick?: () => void }) {
   const handleLogout = () => post('/logout');
 
   return (
-    <header className="bg-white border-b border-gray-200 h-16 flex items-center justify-between px-4 sm:px-6 shrink-0">
+    <header className="bg-white border-b border-gray-200 shadow-sm h-16 flex items-center justify-between px-4 sm:px-6 shrink-0">
       <div className="flex items-center flex-1">
         <button
           onClick={onMenuClick}
@@ -28,7 +28,7 @@ export function Topbar({ onMenuClick }: { onMenuClick?: () => void }) {
             <input
               type="text"
               placeholder="Search products, customers, orders..."
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-gray-50 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
+              className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-md leading-5 bg-gray-50 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-primary/20 focus:border-primary sm:text-sm transition-colors"
             />
           </div>
         </div>

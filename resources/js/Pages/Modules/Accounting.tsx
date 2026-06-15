@@ -15,19 +15,19 @@ export function MoneyTransfer() {
         <div className="flex flex-col md:flex-row items-center gap-6 mb-8">
           <div className="flex-1 w-full bg-gray-50 rounded-xl p-5 border border-gray-100">
             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">From Account</label>
-            <select className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none">
+            <select className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none">
               <option>Cash (Balance: $5,000.00)</option>
               <option>Bank Account (Balance: $15,400.50)</option>
             </select>
           </div>
           
-          <div className="hidden md:flex w-12 h-12 rounded-full bg-blue-50 items-center justify-center shrink-0 border border-blue-100">
-            <ArrowRightIcon className="w-5 h-5 text-blue-600" />
+          <div className="hidden md:flex w-12 h-12 rounded-full bg-primary-light items-center justify-center shrink-0 border border-primary/30">
+            <ArrowRightIcon className="w-5 h-5 text-primary" />
           </div>
           
-          <div className="flex-1 w-full bg-blue-50/30 rounded-xl p-5 border border-blue-100/50">
+          <div className="flex-1 w-full bg-primary-light/40 rounded-xl p-5 border border-primary/30">
             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">To Account</label>
-            <select className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none">
+            <select className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none">
               <option>Bank Account (Balance: $15,400.50)</option>
               <option>Cash (Balance: $5,000.00)</option>
             </select>
@@ -39,21 +39,21 @@ export function MoneyTransfer() {
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">Amount to Transfer</label>
             <div className="relative">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">$</span>
-              <input type="number" placeholder="0.00" className="w-full pl-8 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-lg font-bold text-gray-900 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none" />
+              <input type="number" placeholder="0.00" className="w-full pl-8 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-lg font-bold text-gray-900 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" />
             </div>
           </div>
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">Date</label>
-            <input type="date" className="w-full px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none" />
+            <input type="date" className="w-full px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" />
           </div>
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">Reference Note</label>
-            <textarea placeholder="e.g. Deposit to bank for week 1" className="w-full px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none min-h-[100px]" />
+            <textarea placeholder="e.g. Deposit to bank for week 1" className="w-full px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none min-h-[100px]" />
           </div>
         </div>
         
         <div className="mt-8 pt-6 border-t border-gray-100 flex justify-end">
-          <Button className="h-12 px-8 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold flex items-center gap-2 shadow-sm">
+          <Button className="h-12 px-8 rounded-xl bg-primary hover:bg-primary-dark text-white font-bold flex items-center gap-2 shadow-sm">
             <RefreshCcw className="w-5 h-5" /> Execute Transfer
           </Button>
         </div>

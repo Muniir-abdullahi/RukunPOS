@@ -4,12 +4,12 @@ import { ChevronDown } from 'lucide-react';
 export function FAQ() {
   const faqs = [
     {
-      q: "Is SaleLite suitable for small shops?",
+      q: "Is RukunPOS suitable for small shops?",
       a: "Yes, it is purposefully designed for small and medium retail businesses seeking a simple, low-overhead system without unneeded enterprise complexity."
     },
     {
       q: "Can I manage products and stock?",
-      a: "Absolutely. SaleLite includes full inventory tracking, allowing you to manage categories, brands, variants, stock quantities, and low-stock alerts."
+      a: "Absolutely. RukunPOS includes full inventory tracking, allowing you to manage categories, brands, variants, stock quantities, and low-stock alerts."
     },
     {
       q: "Can I track sales and purchases?",
@@ -17,7 +17,7 @@ export function FAQ() {
     },
     {
       q: "Does it support expenses and reports?",
-      a: "SaleLite allows you to log operational expenses. It combines sales, purchases, and expenses to generate comprehensive Profit/Loss and performance reports."
+      a: "RukunPOS allows you to log operational expenses. It combines sales, purchases, and expenses to generate comprehensive Profit/Loss and performance reports."
     },
     {
       q: "Is this frontend-only demo?",

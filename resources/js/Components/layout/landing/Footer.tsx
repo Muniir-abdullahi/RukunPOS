@@ -12,7 +12,9 @@ export function Footer() {
               <div className="w-8 h-8 bg-primary-600 rounded-md flex items-center justify-center">
                 <Package className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold tracking-tight text-gray-900">SaleLite</span>
+              <span className="text-xl font-semibold text-gray-900 font-display">
+                Ruku<span className="text-primary">n</span><span className="ml-1 text-gray-500">POS</span>
+              </span>
             </Link>
             <p className="text-sm text-gray-500 mb-6 max-w-xs">
               A simple POS, inventory, sales, and reporting system built for modern small and medium retail businesses.
@@ -42,7 +44,7 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Contact</h3>
             <ul className="space-y-3 pb-4">
-              <li className="text-base text-gray-500">support@salelite-example.com</li>
+              <li className="text-base text-gray-500">support@rukun.app</li>
               <li className="text-base text-gray-500">+1 (555) 123-4567</li>
               <li className="text-base text-gray-500 flex flex-col">
                 <span>123 Retail Avenue</span>
@@ -54,11 +56,11 @@ export function Footer() {
         
         <div className="pt-8 border-t border-gray-200 mt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-gray-400">
-            &copy; {new Date().getFullYear()} SaleLite Demonstration MVP. All rights reserved.
+            &copy; {new Date().getFullYear()} RukunPOS. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0 text-sm text-gray-400">
-            <a href="#" className="hover:text-gray-900 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-gray-900 transition-colors">Terms of Service</a>
+            <a href="/privacy" className="hover:text-gray-900 transition-colors">Privacy Policy</a>
+            <a href="/terms" className="hover:text-gray-900 transition-colors">Terms of Service</a>
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ export function ReportsPreview() {
   const reports = [
     {
       title: "Sales Report",
-      icon: <LineChart className="w-5 h-5 text-blue-500" />,
+      icon: <LineChart className="w-5 h-5 text-primary" />,
       desc: "Track daily, monthly, and yearly revenue with beautiful charts and detailed transaction logs."
     },
     {
@@ -34,7 +34,7 @@ export function ReportsPreview() {
           <div className="lg:col-span-1">
             <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">Data that makes sense</h2>
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              Stop guessing if you're making money. SaleLite automatically compiles your transactional data into clear, actionable reporting summaries.
+              Stop guessing if you're making money. RukunPOS automatically compiles your transactional data into clear, actionable reporting summaries.
             </p>
             
             <ul className="space-y-4">

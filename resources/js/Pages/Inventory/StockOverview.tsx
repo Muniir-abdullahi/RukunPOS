@@ -79,14 +79,14 @@ export function StockOverview({ productsProp, filters = {} }: { productsProp?: a
           <p className="text-sm text-gray-500 mt-1">Monitor your inventory levels and value</p>
         </div>
         <Link href="/inventory/adjustments">
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white font-bold">New Adjustment</Button>
+          <Button className="bg-primary hover:bg-primary-dark text-white font-bold">New Adjustment</Button>
         </Link>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 shrink-0">
         <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center border border-blue-100">
-            <PackageOpen className="w-6 h-6 text-blue-600" />
+          <div className="w-12 h-12 bg-primary-light rounded-full flex items-center justify-center border border-primary/30">
+            <PackageOpen className="w-6 h-6 text-primary" />
           </div>
           <div>
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Loaded Products</p>

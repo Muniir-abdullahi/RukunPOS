@@ -98,7 +98,7 @@ export function TaxonomyModule({ type, records, filters = {} }: TaxonomyProps) {
           <h1 className="text-2xl font-bold text-gray-900">{type === 'Category' ? 'Categories' : type === 'Brand' ? 'Brands' : type === 'Unit' ? 'Units' : 'Tax Rates'}</h1>
           <p className="text-sm text-gray-500 mt-1">Manage product {type.toLowerCase()}s</p>
         </div>
-        <Button onClick={() => handleOpenModal()} className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2">
+        <Button onClick={() => handleOpenModal()} className="bg-primary hover:bg-primary-dark text-white flex items-center gap-2">
           <Plus className="w-4 h-4" /> Add {type}
         </Button>
       </div>
@@ -115,7 +115,7 @@ export function TaxonomyModule({ type, records, filters = {} }: TaxonomyProps) {
         className="flex-1 min-h-0"
         actions={item => (
           <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Button variant="ghost" size="sm" onClick={() => handleOpenModal(item)} className="w-8 h-8 p-0 text-gray-500 hover:text-blue-600 hover:bg-blue-50">
+            <Button variant="ghost" size="sm" onClick={() => handleOpenModal(item)} className="w-8 h-8 p-0 text-gray-500 hover:text-primary hover:bg-primary-light">
               <Edit2 className="w-4 h-4" />
             </Button>
             <Button variant="ghost" size="sm" onClick={() => { if (confirm('Delete?')) serverMode ? router.delete(`${basePath}/${item.id}`) : deleteFn(item.id) }} className="w-8 h-8 p-0 text-gray-500 hover:text-red-600 hover:bg-red-50">
@@ -139,7 +139,7 @@ export function TaxonomyModule({ type, records, filters = {} }: TaxonomyProps) {
                     type="text" required autoFocus
                     value={formData.name} 
                     onChange={e => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary"
                   />
                 </div>
                 {type === 'TaxRate' ? (
@@ -149,7 +149,7 @@ export function TaxonomyModule({ type, records, filters = {} }: TaxonomyProps) {
                       type="number" required min="0" step="0.01"
                       value={formData.rate}
                       onChange={e => setFormData({ ...formData, rate: Number(e.target.value) })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary"
                     />
                   </div>
                 ) : type === 'Unit' ? (
@@ -159,7 +159,7 @@ export function TaxonomyModule({ type, records, filters = {} }: TaxonomyProps) {
                       type="text" required
                       value={formData.shortName} 
                       onChange={e => setFormData({ ...formData, shortName: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary"
                       placeholder="e.g. kg, pcs, L"
                     />
                   </div>
@@ -170,7 +170,7 @@ export function TaxonomyModule({ type, records, filters = {} }: TaxonomyProps) {
                       rows={2}
                       value={formData.description} 
                       onChange={e => setFormData({ ...formData, description: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 resize-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary resize-none"
                     ></textarea>
                   </div>
                 )}
@@ -179,7 +179,7 @@ export function TaxonomyModule({ type, records, filters = {} }: TaxonomyProps) {
                   <select 
                     value={formData.status} 
                     onChange={e => setFormData({ ...formData, status: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary bg-white"
                   >
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
@@ -188,7 +188,7 @@ export function TaxonomyModule({ type, records, filters = {} }: TaxonomyProps) {
               </div>
               <div className="p-5 border-t border-gray-100 bg-gray-50 flex justify-end gap-3 rounded-b-2xl">
                 <Button variant="outline" type="button" onClick={() => setIsModalOpen(false)}>Cancel</Button>
-                <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">Save {type}</Button>
+                <Button type="submit" className="bg-primary hover:bg-primary-dark text-white">Save {type}</Button>
               </div>
             </form>
           </div>

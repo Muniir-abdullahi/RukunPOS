@@ -83,7 +83,7 @@ export function ProductForm() {
           <Link href="/products">
             <Button variant="outline" className="h-10">Cancel</Button>
           </Link>
-          <Button onClick={handleSave} className="h-10 bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2">
+          <Button onClick={handleSave} className="h-10 bg-primary hover:bg-primary-dark text-white flex items-center gap-2">
             <Save className="w-4 h-4" /> {isEditing ? 'Update Product' : 'Save Product'}
           </Button>
         </div>
@@ -99,7 +99,7 @@ export function ProductForm() {
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Product Name <span className="text-red-500">*</span></label>
                 <input 
                   type="text" name="name" required value={formData.name} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" 
                   placeholder="e.g. Sony Bravia 55&quot; 4K"
                 />
               </div>
@@ -108,7 +108,7 @@ export function ProductForm() {
                   <label className="block text-sm font-semibold text-gray-700 mb-1">SKU <span className="text-red-500">*</span></label>
                   <input 
                     type="text" name="sku" required value={formData.sku} onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" 
                     placeholder="e.g. SNY-TV-55"
                   />
                 </div>
@@ -117,7 +117,7 @@ export function ProductForm() {
                   <div className="relative">
                     <input 
                       type="text" name="barcode" value={formData.barcode} onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" 
                       placeholder="e.g. 8493021948"
                     />
                   </div>
@@ -127,7 +127,7 @@ export function ProductForm() {
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Description</label>
                 <textarea 
                   name="description" rows={3} value={formData.description} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 resize-none" 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary resize-none" 
                   placeholder="Detailed product description..."
                 />
               </div>
@@ -143,7 +143,7 @@ export function ProductForm() {
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
                   <input 
                     type="number" step="0.01" min="0" name="costPrice" required value={formData.costPrice} onChange={handleChange}
-                    className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
+                    className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" 
                   />
                 </div>
               </div>
@@ -153,7 +153,7 @@ export function ProductForm() {
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
                   <input 
                     type="number" step="0.01" min="0" name="sellingPrice" required value={formData.sellingPrice} onChange={handleChange}
-                    className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
+                    className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" 
                   />
                 </div>
               </div>
@@ -161,7 +161,7 @@ export function ProductForm() {
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Opening Stock</label>
                 <input 
                   type="number" min="0" name="stock" value={formData.stock} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" 
                   disabled={isEditing} // usually avoid changing raw stock via edit
                 />
                 {isEditing && <p className="text-[10px] text-gray-500 mt-1">Use Stock Adjustment to modify current stock.</p>}
@@ -170,7 +170,7 @@ export function ProductForm() {
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Low Stock Alert</label>
                 <input 
                   type="number" min="0" name="minStock" value={formData.minStock} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" 
                 />
               </div>
             </div>
@@ -189,7 +189,7 @@ export function ProductForm() {
                    <UploadCloud className="w-8 h-8 text-gray-400" />
                  )}
               </div>
-              <div className="text-sm font-semibold text-blue-600 mb-1 cursor-pointer hover:underline">Click to upload</div>
+              <div className="text-sm font-semibold text-primary mb-1 cursor-pointer hover:underline">Click to upload</div>
               <p className="text-xs text-gray-500 mb-4">SVG, PNG, JPG or GIF (max. 800x400px)</p>
               
               <div className="w-full relative">
@@ -198,7 +198,7 @@ export function ProductForm() {
                 </div>
                 <input 
                   type="text" name="image" value={formData.image} onChange={handleChange}
-                  className="w-full pl-9 pr-3 py-1.5 text-xs border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full pl-9 pr-3 py-1.5 text-xs border border-gray-300 rounded-lg focus:ring-primary focus:border-primary"
                   placeholder="Or enter image URL..."
                 />
               </div>
@@ -212,7 +212,7 @@ export function ProductForm() {
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Category <span className="text-red-500">*</span></label>
                 <select 
                   name="categoryId" required value={formData.categoryId} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary bg-white"
                 >
                   <option value="" disabled>Select category</option>
                   {categoryRows.map(c => (
@@ -224,7 +224,7 @@ export function ProductForm() {
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Brand</label>
                 <select 
                   name="brandId" value={formData.brandId} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary bg-white"
                 >
                   <option value="" disabled>Select brand</option>
                   {brandRows.map(b => (
@@ -236,7 +236,7 @@ export function ProductForm() {
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Unit</label>
                 <select 
                   name="unitId" value={formData.unitId} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary bg-white"
                 >
                   {unitRows.map(u => (
                     <option key={u.id} value={u.id}>{u.name} ({u.shortName || u.short_name})</option>
@@ -247,7 +247,7 @@ export function ProductForm() {
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Status</label>
                 <select 
                   name="status" value={formData.status} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary bg-white"
                 >
                   <option value="Active">Active</option>
                   <option value="Inactive">Inactive</option>

@@ -31,7 +31,7 @@ export function ProblemSolution() {
         
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-4 tracking-tight">Retail is hard enough. <br className="hidden md:block"/> Let's fix the operational chaos.</h2>
-          <p className="text-lg text-gray-600">Running a store without a centralized system leads to costly mistakes and wasted hours. SaleLite fixes exactly that.</p>
+          <p className="text-lg text-gray-600">Running a store without a centralized system leads to costly mistakes and wasted hours. RukunPOS fixes exactly that.</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-12 lg:gap-24 items-center">
@@ -57,7 +57,7 @@ export function ProblemSolution() {
             <div className="absolute inset-0 bg-primary-50 rounded-3xl -mx-4 -my-8 sm:mx-0 sm:my-0"></div>
             <div className="relative p-6 sm:p-10 space-y-8">
               <h3 className="text-xl font-semibold text-gray-900 flex items-center">
-                 <span className="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm mr-3">After</span> With SaleLite
+                 <span className="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm mr-3">After</span> With RukunPOS
               </h3>
               
               <div className="space-y-6">

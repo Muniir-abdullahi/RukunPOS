@@ -9,7 +9,7 @@ export const ReceiptPrint = forwardRef<HTMLDivElement, ReceiptProps>(({ sale }, 
   return (
     <div ref={ref} className="bg-white p-6 w-[300px] text-black font-mono text-sm mx-auto shadow-md border border-gray-200">
       <div className="text-center mb-4 border-b border-dashed border-gray-400 pb-4">
-        <h2 className="text-xl font-bold uppercase tracking-widest mb-1">SaleLite POS</h2>
+        <h2 className="text-xl font-bold uppercase tracking-widest mb-1">RukunPOS</h2>
         <p className="text-xs text-gray-600">123 Market Street, City</p>
         <p className="text-xs text-gray-600">Tel: +1 234 567 890</p>
       </div>
@@ -59,7 +59,7 @@ export const ReceiptPrint = forwardRef<HTMLDivElement, ReceiptProps>(({ sale }, 
       <div className="text-center text-xs">
         <p className="font-bold">Thank you for your business!</p>
         <p className="mt-1">Please come again.</p>
-        <p className="mt-4 text-[10px] text-gray-500">Powered by SaleLite</p>
+        <p className="mt-4 text-[10px] text-gray-500">Powered by RukunPOS</p>
       </div>
     </div>
   );
