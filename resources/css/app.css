@@ -1,44 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
-
-@font-face {
-  font-family: 'ClashGrotesk';
-  src: url('/fonts/ClashGrotesk-Variable.woff2') format('woff2');
-  font-weight: 300 700;
-  font-display: swap;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'ClashGrotesk';
-  src: url('/fonts/ClashGrotesk-Light.woff2') format('woff2');
-  font-weight: 300;
-  font-display: swap;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'ClashGrotesk';
-  src: url('/fonts/ClashGrotesk-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-display: swap;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'ClashGrotesk';
-  src: url('/fonts/ClashGrotesk-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-display: swap;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'ClashGrotesk';
-  src: url('/fonts/ClashGrotesk-Semibold.woff2') format('woff2');
-  font-weight: 600;
-  font-display: swap;
-  font-style: normal;
-}
 
 @theme {
   --color-primary: #1D9E75;
@@ -66,8 +27,8 @@
   --color-info: #2563EB;
   --color-info-light: #DBEAFE;
 
-  --font-sans: "ClashGrotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "ClashGrotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
@@ -117,6 +78,6 @@
   }
 
   button, input, select, textarea {
-    font-family: 'ClashGrotesk', ui-sans-serif, system-ui, sans-serif;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
   }
 }
