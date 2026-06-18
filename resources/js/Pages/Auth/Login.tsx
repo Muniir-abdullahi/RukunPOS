@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
-import { ArrowRight, BarChart3, CheckCircle2, LockKeyhole, Mail, Package, ShieldCheck } from 'lucide-react';
+import { ArrowRight, LockKeyhole, Mail, Package, ShieldCheck } from 'lucide-react';
 
 function Page() {
   const { data, setData, post, processing, errors } = useForm({
@@ -82,7 +82,7 @@ function Page() {
                     value={data.email}
                     onChange={e => setData('email', e.target.value)}
                     autoComplete="email"
-                    placeholder="admin@rukunpos.app"
+                    placeholder="email@example.com"
                   />
                 </div>
                 {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
@@ -113,21 +113,6 @@ function Page() {
                 {!processing && <ArrowRight className="h-4 w-4" />}
               </button>
             </form>
-
-            <div className="mt-6 grid gap-3 rounded-lg border border-gray-200 bg-gray-50 p-4 text-xs text-gray-500">
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="mt-0.5 h-4 w-4 text-primary" />
-                <div>
-                  <p className="font-semibold text-gray-800">Demo access</p>
-                  <p className="mt-1">Email: admin@rukunpos.app</p>
-                  <p>Password: password123</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3 border-t border-gray-200 pt-3">
-                <BarChart3 className="mt-0.5 h-4 w-4 text-primary" />
-                <p>Access is limited to authorized staff. Activity may be recorded in audit logs.</p>
-              </div>
-            </div>
           </div>
         </section>
       </div>
