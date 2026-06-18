@@ -141,11 +141,11 @@ const NavItemGroup: React.FC<{ item: any; onClose?: () => void; collapsed?: bool
         className={cn(
           "w-full group flex items-center rounded-md text-sm font-medium transition-all duration-200 relative",
           collapsed ? "justify-center p-3" : "justify-between px-3 py-2.5",
-          isOpen ? "text-gray-900" : "text-gray-600 hover:bg-gray-100/80 hover:text-gray-900"
+          isActiveGroup ? "text-primary-text" : isOpen ? "text-gray-900" : "text-gray-600 hover:bg-gray-100/80 hover:text-gray-900"
         )}
       >
         <div className="flex items-center">
-          <item.icon className={cn("w-5 h-5 shrink-0 transition-colors", isOpen ? "text-primary" : "text-gray-400 group-hover:text-gray-600")} />
+          <item.icon className={cn("w-5 h-5 shrink-0 transition-colors", isActiveGroup ? "text-primary" : "text-gray-400 group-hover:text-gray-600")} />
           {!collapsed && <span className="ml-3 tracking-wide">{item.name}</span>}
         </div>
         {!collapsed && <ChevronDown className={cn("w-3.5 h-3.5 opacity-50 transition-transform shrink-0", isOpen && "rotate-180")} />}

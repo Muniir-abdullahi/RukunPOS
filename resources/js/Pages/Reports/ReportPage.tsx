@@ -8,7 +8,7 @@ import { DataTable } from '@/Components/ui/DataTable';
 import { cn } from '@/lib/utils';
 
 const primary = '#1D9E75';
-const chartColors = ['#1D9E75', '#2563EB', '#D97706', '#DC2626', '#0F172A'];
+const chartColors = ['#1D9E75', '#6EE7B7', '#0F6E56', '#D97706', '#DC2626'];
 
 const money = (value: unknown) => `$${Number(value ?? 0).toFixed(2)}`;
 
