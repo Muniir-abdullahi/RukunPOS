@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Customer;
-use App\Models\Warehouse;
+use App\Models\Quotation;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Quotation>
+ * @extends Factory<Quotation>
  */
 class QuotationFactory extends Factory
 {
@@ -19,14 +19,12 @@ class QuotationFactory extends Factory
     public function definition(): array
     {
         return [
-            'reference' => 'QT-' . $this->faker->unique()->randomNumber(6),
+            'reference' => 'QT-'.$this->faker->unique()->randomNumber(6),
             'customer_id' => Customer::factory(),
-            'warehouse_id' => Warehouse::factory(),
             'quotation_date' => $this->faker->date(),
             'status' => 'pending',
-            'tax_amount' => 0,
-            'discount_amount' => 0,
-            'shipping_amount' => 0,
+            'tax_total' => 0,
+            'discount_total' => 0,
             'subtotal' => $this->faker->randomFloat(2, 50, 1000),
             'grand_total' => $this->faker->randomFloat(2, 50, 1000),
             'note' => $this->faker->sentence(),

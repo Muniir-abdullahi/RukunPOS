@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\CustomerGroup;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CustomerGroup>
+ * @extends Factory<CustomerGroup>
  */
 class CustomerGroupFactory extends Factory
 {
@@ -17,8 +18,8 @@ class CustomerGroupFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word() . ' Group',
-            'percentage' => $this->faker->randomFloat(2, 0, 20),
+            'name' => $this->faker->unique()->word().' Group',
+            'description' => $this->faker->sentence(),
             'status' => 'active',
         ];
     }

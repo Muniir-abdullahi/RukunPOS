@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\ExpenseCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ExpenseCategory>
+ * @extends Factory<ExpenseCategory>
  */
 class ExpenseCategoryFactory extends Factory
 {
@@ -17,7 +18,7 @@ class ExpenseCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word() . ' Expense',
+            'name' => $this->faker->word().' Expense',
             'description' => $this->faker->sentence(),
             'status' => 'active',
         ];

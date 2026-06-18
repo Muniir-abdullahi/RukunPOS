@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Account;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Account>
+ * @extends Factory<Account>
  */
 class AccountFactory extends Factory
 {
@@ -18,11 +19,9 @@ class AccountFactory extends Factory
     {
         return [
             'account_no' => $this->faker->unique()->bankAccountNumber(),
-            'name' => $this->faker->word() . ' Account',
-            'initial_balance' => $this->faker->randomFloat(2, 0, 1000),
+            'name' => $this->faker->word().' Account',
+            'opening_balance' => $this->faker->randomFloat(2, 0, 1000),
             'current_balance' => $this->faker->randomFloat(2, 0, 5000),
-            'note' => $this->faker->sentence(),
-            'is_default' => false,
             'status' => 'active',
         ];
     }

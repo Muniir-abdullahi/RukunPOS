@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Unit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Unit>
+ * @extends Factory<Unit>
  */
 class UnitFactory extends Factory
 {
@@ -17,7 +18,8 @@ class UnitFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word() . ' Unit',
+            'name' => $this->faker->word().' Unit',
+            'code' => $this->faker->unique()->lexify('???'),
             'short_name' => $this->faker->lexify('???'),
             'base_unit_id' => null,
             'operator' => '*',

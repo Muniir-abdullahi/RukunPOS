@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\ExpenseCategory;
 use App\Models\Account;
-use App\Models\Warehouse;
+use App\Models\Expense;
+use App\Models\ExpenseCategory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Expense>
+ * @extends Factory<Expense>
  */
 class ExpenseFactory extends Factory
 {
@@ -22,7 +22,6 @@ class ExpenseFactory extends Factory
         return [
             'expense_category_id' => ExpenseCategory::factory(),
             'account_id' => Account::factory(),
-            'warehouse_id' => Warehouse::factory(),
             'expense_date' => $this->faker->date(),
             'amount' => $this->faker->randomFloat(2, 10, 500),
             'note' => $this->faker->sentence(),

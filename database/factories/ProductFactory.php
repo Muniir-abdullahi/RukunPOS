@@ -2,14 +2,15 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Category;
 use App\Models\Brand;
-use App\Models\Unit;
+use App\Models\Category;
+use App\Models\Product;
 use App\Models\TaxRate;
+use App\Models\Unit;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
+ * @extends Factory<Product>
  */
 class ProductFactory extends Factory
 {
@@ -22,7 +23,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $this->faker->words(3, true),
-            'code' => strtoupper($this->faker->bothify('??-####')), // Using 'code' as it's common, will verify later if sku
+            'sku' => strtoupper($this->faker->unique()->bothify('??-####')),
             'category_id' => Category::factory(),
             'brand_id' => Brand::factory(),
             'unit_id' => Unit::factory(),

@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\TaxRate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TaxRate>
+ * @extends Factory<TaxRate>
  */
 class TaxRateFactory extends Factory
 {
@@ -17,9 +18,8 @@ class TaxRateFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'Tax ' . $this->faker->numberBetween(5, 20) . '%',
+            'name' => 'Tax '.$this->faker->unique()->numberBetween(1, 1000).'%',
             'rate' => $this->faker->randomFloat(2, 5, 20),
-            'type' => 'percentage',
             'status' => 'active',
         ];
     }

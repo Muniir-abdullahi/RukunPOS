@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use Spatie\Permission\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Spatie\Permission\Models\Role;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Spatie\Permission\Models\Role>
+ * @extends Factory<Role>
  */
 class RoleFactory extends Factory
 {
@@ -20,7 +20,7 @@ class RoleFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->unique()->word() . ' Role',
+            'name' => $this->faker->unique()->word().' Role',
             'guard_name' => 'web',
         ];
     }

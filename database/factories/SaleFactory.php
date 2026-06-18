@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Customer;
+use App\Models\Sale;
 use App\Models\Warehouse;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Sale>
+ * @extends Factory<Sale>
  */
 class SaleFactory extends Factory
 {
@@ -19,19 +20,18 @@ class SaleFactory extends Factory
     public function definition(): array
     {
         return [
-            'reference' => 'SL-' . $this->faker->unique()->randomNumber(6),
+            'reference' => 'SL-'.$this->faker->unique()->randomNumber(6),
             'customer_id' => Customer::factory(),
             'warehouse_id' => Warehouse::factory(),
             'sale_date' => $this->faker->date(),
             'status' => 'completed',
             'payment_status' => 'paid',
-            'tax_amount' => 0,
-            'discount_amount' => 0,
-            'shipping_amount' => 0,
+            'tax_total' => 0,
+            'discount_total' => 0,
             'subtotal' => $this->faker->randomFloat(2, 50, 1000),
             'grand_total' => $this->faker->randomFloat(2, 50, 1000),
-            'paid_amount' => $this->faker->randomFloat(2, 50, 1000),
-            'due_amount' => 0,
+            'paid_total' => $this->faker->randomFloat(2, 50, 1000),
+            'due_total' => 0,
             'note' => $this->faker->sentence(),
         ];
     }
